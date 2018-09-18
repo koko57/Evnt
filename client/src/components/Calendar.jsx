@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { selectDate } from '../actions/actions';
 import dateFns from 'date-fns';
-import './Calendar.scss'
+import './Calendar.scss';
 
-export default class Calendar extends Component {
+class Calendar extends Component {
   state = {
-    currentMonth: new Date(),
-    selectedDate: ''
+    currentMonth: new Date()
   };
+
 
   renderHeader() {
     const dateFormat = 'MMMM YYYY';
@@ -32,7 +35,7 @@ export default class Calendar extends Component {
   }
 
   renderCells() {
-    const { currentMonth, selectedDate } = this.state;
+    const { currentMonth } = this.state;
     const monthStart = dateFns.startOfMonth(currentMonth);
     const monthEnd = dateFns.endOfMonth(monthStart);
     const startDate = dateFns.startOfWeek(monthStart);
@@ -53,14 +56,16 @@ export default class Calendar extends Component {
             className={`day--cell ${
               !dateFns.isSameMonth(date, monthStart)
                 ? 'disabled'
-                : dateFns.isSameDay(date, selectedDate)
+                : dateFns.isSameDay(date, this.props.selectedDate)
                   ? 'selected'
                   : ''
             }`}
-            key={dateFns.format(date, 'D.MM')} id={date}
+            key={dateFns.format(date, 'D.MM')}
+            id={date}
             onClick={this.handleClick}
           >
             <span className="day--date">{formattedDate}</span>
+            <Link className="icon" to={'/add-event'}>+</Link>
           </div>
         );
         date = dateFns.addDays(date, 1);
@@ -87,11 +92,11 @@ export default class Calendar extends Component {
 
   handleClick = e => {
     let newDate = dateFns.parse(e.target.id);
-    this.setState({
-      selectedDate: newDate
-    });
-    console.log('clicked', e.target.id);
-  }
+    console.log(newDate);
+    this.props.selectDate(newDate);
+    console.log('submit', this.state);
+    console.log(this.props);
+  };
 
   render() {
     return (
@@ -103,3 +108,12 @@ export default class Calendar extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  selectedDate: state.selectedDate
+});
+
+export default connect(
+  mapStateToProps,
+  { selectDate }
+)(Calendar);

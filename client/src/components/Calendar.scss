@@ -35,10 +35,12 @@
     &.selected {
       border: 3px dotted #097df0;
       font-size: 1.5rem;
+      .icon {
+        display: block;
+      }
     }
-
-  }
-  &--date {
-
+    .icon {
+      display: none;
+    }
   }
 }

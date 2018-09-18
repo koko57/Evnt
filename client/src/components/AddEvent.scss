@@ -1,0 +1,10 @@
+.add-event {
+  height: 60vh;
+  width: 800px;
+  margin: 100px auto;
+  &--form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
