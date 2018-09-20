@@ -5,12 +5,13 @@ const Event = require('../models/event');
 
 router.get('/', (req, res) => {
   Event.find()
-    .then(event => res.json(event))
+    .sort({ date: 1 })
+    .then(events => res.json(events))
     .catch(err => console.log(err));
 });
 
 router.post('/', (req, res) => {
-  Event.create({ name: req.body.name })
+  Event.create(req.body)
     .then(event => res.json(event))
     .catch(err => console.log(err));
 });

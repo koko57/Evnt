@@ -8,9 +8,12 @@ const EventSchema = new Schema({
   },
   date: {
     type: Date,
-    default: Date.now
+    required: true
   },
-  type: {
+  time: {
+    type: String
+  },
+  eventType: {
     type: String
   },
   important: {

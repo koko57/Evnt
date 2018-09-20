@@ -14,7 +14,8 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_EVENTS:
       return {
-        ...state
+        ...state,
+        events: action.payload
       };
     case ADD_EVENT:
       return {
