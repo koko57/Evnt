@@ -6,8 +6,6 @@ import {
   SELECT_DATE
 } from './actionTypes';
 
-// const axios = require('axios');
-
 export const getEvents = () => dispatch => {
   axios.get('/api/events').then(res => {
     dispatch({

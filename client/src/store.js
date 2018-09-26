@@ -1,13 +1,12 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
 import thunk from 'redux-thunk';
-import eventReducer from './reducers/eventReducer';
+import rootReducer from './reducers';
 
+export const history = createBrowserHistory();
 
-const store = createStore(
-  eventReducer,
-  compose(
-    applyMiddleware(thunk)
-  )
+export const store = createStore(
+  connectRouter(history)(rootReducer),
+  compose(applyMiddleware(routerMiddleware(history), thunk))
 );
-
-export default store;

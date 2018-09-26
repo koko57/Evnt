@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import AddEvent from './AddEvent';
+import { connect } from 'react-redux';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import './App.scss'
+import Navbar from './Navbar';
 import Calendar from './Calendar';
+import EventsList from './EventsList';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        {/* <Navbar /> */}
-        <Switch>
-          <Route exact path="/" component={Calendar} />
-          <Route path="/add-event" component={AddEvent} />
-        </Switch>
-      </div>
+      <BrowserRouter>
+        <div className="app">
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Calendar} />
+            <Route path="/eventslist" component={EventsList} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  selectedDate: state.selectedDate
+});
+
+export default connect(mapStateToProps)(App);
