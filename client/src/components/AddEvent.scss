@@ -1,10 +1,21 @@
 .add-event {
-  height: 60vh;
-  width: 800px;
-  margin: 100px auto;
-  &--form {
+  &__form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-items: space-evenly;
+    .btn {
+      margin-top: 2rem;
+    }
   }
+}
+.event-types {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5px;
+  margin-bottom: 2rem;
+}
+.message {
+  color: red;
+  position: absolute;
+  bottom: 3rem;
 }

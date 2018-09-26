@@ -2,28 +2,50 @@
   height: 100%;
   width: 100%;
   position: absolute;
-  margin: 0 auto;
   top: 0;
   left: 0;
   background-color: rgba(255, 255, 255, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
+
 .editor-panel {
-  height: 80vh;
+  height: 85vh;
+  width: 60vh;
   background-color: rgb(255, 255, 255);
   display: flex;
+  padding: 4.5rem 4.5rem 1rem;
   position: relative;
   flex-direction: column;
-  padding: 5% 10%;
   border: 1px solid teal;
   border-radius: 5px;
-  .icon__close {
+
+  .icon--close {
     display: block;
     position: absolute;
     right: 1.5rem;
     top: 1.25rem;
+  }
+
+  &__navbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .navbar {
+    &__item {
+      color: teal;
+      width: 45%;
+      line-height: 2.5rem;
+      border: 1px solid teal;
+      border-radius: 5px;
+      text-align: center;
+
+      &.active {
+        background-color: teal;
+        color: white;
+      }
+    }
   }
 }

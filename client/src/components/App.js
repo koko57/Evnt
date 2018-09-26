@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import './App.scss'
 import Navbar from './Navbar';
 import Calendar from './Calendar';
 import EventsList from './EventsList';

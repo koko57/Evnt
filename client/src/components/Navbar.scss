@@ -3,11 +3,9 @@
   width: 100%;
   position: fixed;
   top: 0;
-  z-index: -1;
+  background-color: #fff;
   border-bottom: 2px solid teal;
-  background-color:transparent;
   color: #333;
-
 
   &--wrapper {
     width: 90%;
