@@ -16,6 +16,12 @@ router.post('/', (req, res) => {
     .catch(err => console.log(err));
 });
 
+router.put('/:id', (req, res) => {
+  Event.findByIdAndUpdate(req.params.id, req.body)
+    .then(() => res.json({ success: true }))
+    .catch(err => console.log(err));
+});
+
 router.delete('/:id', (req, res) => {
   Event.findById(req.params.id)
     .then(event => event.remove().then(() => res.json({ success: true })))
