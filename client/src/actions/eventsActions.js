@@ -3,7 +3,7 @@ import {
   GET_EVENTS,
   ADD_EVENT,
   DELETE_EVENT,
-  SELECT_DATE
+  EDIT_EVENT,
 } from './actionTypes';
 
 export const getEvents = () => dispatch => {
@@ -33,9 +33,12 @@ export const deleteEvent = id => dispatch => {
   });
 };
 
-export const selectDate = date => dispatch => {
-  dispatch({
-    type: SELECT_DATE,
-    payload: date
+export const editEvent = (id, event) => dispatch => {
+  axios.put(`/api/events/${id}`, event).then(res => {
+    dispatch({
+      type: EDIT_EVENT,
+      id: id,
+      payload: event
+    });
   });
 };

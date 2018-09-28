@@ -2,12 +2,11 @@ import {
   GET_EVENTS,
   ADD_EVENT,
   DELETE_EVENT,
-  SELECT_DATE
+  EDIT_EVENT
 } from '../actions/actionTypes';
 
 const initialState = {
   events: [],
-  selectedDate: ''
 };
 
 export default (state = initialState, action) => {
@@ -27,10 +26,10 @@ export default (state = initialState, action) => {
         ...state,
         events: state.events.filter(event => event._id !== action.payload)
       };
-    case SELECT_DATE:
+      case EDIT_EVENT:
       return {
         ...state,
-        selectedDate: action.payload
+        events: [...state.events.filter(event => event._id !== action.id), action.payload]
       };
     default:
       return {
