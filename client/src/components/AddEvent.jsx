@@ -1,25 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addEvent, selectDate, getEvents } from '../actions/actions';
+import dateFns from 'date-fns';
+import { addEvent, getEvents, editEvent } from '../actions/eventsActions';
+import { selectDate, changeMode } from '../actions/calendarActions';
 import './AddEvent.scss';
 import { Input, Button } from 'react-materialize';
 
 class AddEvent extends Component {
-  state = {
-    name: '',
-    time: '',
-    date: '',
-    eventType: '',
-    important: false,
-    message: '',
-    events: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      time: '',
+      date: '',
+      eventType: '',
+      important: false,
+      message: '',
+      events: []
+    };
+  }
 
   componentDidMount() {
-    this.setState({ date: this.props.selectedDate });
+    const { selectedEvent: event, selectedDate } = this.props;
+    const date = event.date || selectedDate;
+    this.setState({
+      date: dateFns.format(date, 'D MMMM YYYY'),
+      name: event.name || '',
+      time: event.time || '',
+      eventType: event.eventType || '',
+      important: event.important || ''
+    });
   }
 
   handleSubmit = e => {
+    const { mode, addEvent, editEvent, selectedEvent } = this.props;
     e.preventDefault();
     if (!this.state.name) {
       document.querySelector('.validate').classList.add('invalid');
@@ -32,14 +46,16 @@ class AddEvent extends Component {
         eventType: this.state.type,
         important: false
       };
-      this.props.addEvent(newEvent);
+      mode === 'edit'
+        ? editEvent(selectedEvent._id, newEvent)
+        : addEvent(newEvent);
       this.setState({
         name: '',
         time: '',
         date: '',
         important: false
       });
-      this.props.selectDate('');
+      this.forceUpdate();
     }
   };
   handleChange = e => {
@@ -47,9 +63,17 @@ class AddEvent extends Component {
       [e.target.name]: e.target.value
     });
   };
+  checkedCheck = e => {
+    console.log(e.target.checked)
+    this.setState({
+      important : e.target.checked
+    });
+  }
 
   render() {
-    const { message } = this.state;
+    const { message, name, date, time } = this.state;
+    const { selectedDate, mode, events } = this.props;
+
     return (
       <div className="add-event__form">
         <Input
@@ -58,14 +82,22 @@ class AddEvent extends Component {
           className="validate"
           placeholder="Event name"
           onChange={this.handleChange}
-          value={this.state.name}
+          value={name}
         />
         {message && <p className="message">{message}</p>}
+        {mode === 'edit' && (
+          <input
+            type="date"
+            name="date"
+            onChange={this.handleChange}
+            value={date}
+          />
+        )}
         <Input
           type="time"
           name="time"
           onChange={this.handleChange}
-          value={this.state.time}
+          value={time}
           options={{ twelvehour: false }}
           placeholder="Event time"
         />
@@ -137,21 +169,35 @@ class AddEvent extends Component {
           type="checkbox"
           className="filled-in"
           label="Important!"
+          onChange={this.checkedCheck}
         />
         <Button waves="light" className="btn" onClick={this.handleSubmit}>
-          Add event
+          Submit
         </Button>
+        {mode !== 'view' &&
+          selectedDate &&
+          events.length !== 0 && (
+            <Button
+              waves="light"
+              className="btn"
+              onClick={() => this.props.changeMode('view')}
+            >
+              Back
+            </Button>
+          )}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  selectedDate: state.events.selectedDate,
+  selectedEvent: state.calendar.selectedEvent,
+  selectedDate: state.calendar.selectedDate,
+  mode: state.calendar.mode,
   events: state.events.events
 });
 
 export default connect(
   mapStateToProps,
-  { addEvent, selectDate, getEvents }
+  { addEvent, getEvents, editEvent, selectDate, changeMode }
 )(AddEvent);

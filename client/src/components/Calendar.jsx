@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon } from 'react-materialize';
-import { getEvents, selectDate } from '../actions/actions';
+import { getEvents } from '../actions/eventsActions';
+import { selectDate, openPanel, changeMode } from '../actions/calendarActions';
 import dateFns from 'date-fns';
 import './Calendar.scss';
 import EditorPanel from './EditorPanel';
+import Day from './Day';
 
 class Calendar extends Component {
   state = {
@@ -15,7 +17,6 @@ class Calendar extends Component {
     this.props.getEvents();
   }
 
-// TODO: separate component???
   renderHeader() {
     return (
       <div className="caledar__header header">
@@ -56,37 +57,35 @@ class Calendar extends Component {
     const endDate = dateFns.endOfWeek(monthEnd, { weekStartsOn: 1 });
 
     const rows = [];
-
     let days = [];
     let date = startDate;
     let dayOfMonth;
     let sameDate;
     let sameMonth;
-    let month;
+    let monthsDiff;
+    const filterEvents = (events, day) => {
+      return events.filter(e => dateFns.isSameDay(e.date, day))
+    }
+    let dayEvents;
 
     while (date <= endDate) {
       for (let i = 0; i < 7; i++) {
         dayOfMonth = dateFns.format(date, 'D');
         sameDate = dateFns.isSameDay(date, this.props.selectedDate);
         sameMonth = dateFns.isSameMonth(date, monthStart);
-        month = dateFns.compareAsc(date, monthStart);
+        monthsDiff = dateFns.compareAsc(date, monthStart);
+        dayEvents = filterEvents(this.props.events, date)
+
         days.push(
-          <div
-            className={`day__cell ${
-              !sameMonth
-                ? month < 0
-                  ? 'disabled prev'
-                  : 'disabled next'
-                : sameDate
-                  ? 'selected'
-                  : ''
-            }`}
-            key={dateFns.format(date, 'D.MM')}
-            id={date}
-            onClick={sameMonth ? this.handleClick : null}
-          >
-            <span className="day__date">{dayOfMonth}</span>
-          </div>
+          <Day
+            sameMonth={sameMonth}
+            monthsDiff={monthsDiff}
+            sameDate={sameDate}
+            date={date}
+            dayOfMonth={dayOfMonth}
+            handleClick={this.handleClick}
+            events={dayEvents}
+          />
         );
         date = dateFns.addDays(date, 1);
       }
@@ -111,14 +110,18 @@ class Calendar extends Component {
   };
 
   handleClick = e => {
-    let newDate = e.currentTarget.id;
+    const selected = e.currentTarget
+    let newDate = selected.id;
+    console.log(selected.dataset.events);
     this.props.selectDate(newDate);
+    selected.dataset.events === 0 ? this.props.changeMode('add') : this.props.changeMode('view');
+    this.props.openPanel();
   };
 
   render() {
     return (
       <div className="main">
-        {this.props.selectedDate && <EditorPanel events={this.props.events} />}
+        {this.props.panelOpened && <EditorPanel />}
         <div className="calendar">
           {this.renderHeader()}
           {this.renderDays()}
@@ -131,10 +134,11 @@ class Calendar extends Component {
 
 const mapStateToProps = state => ({
   selectedDate: state.events.selectedDate,
-  events: state.events.events
+  events: state.events.events,
+  panelOpened: state.calendar.panelOpened
 });
 
 export default connect(
   mapStateToProps,
-  { getEvents, selectDate }
+  { getEvents, selectDate, openPanel, changeMode }
 )(Calendar);
