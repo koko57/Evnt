@@ -1,0 +1,30 @@
+@import '../utils/utils';
+
+.calendar-header {
+  &__main {
+    @include flex($justify: space-between);
+    text-align: center;
+    padding: 1rem calc(100% / 14);
+  }
+  &__month {
+    font-family: $font--main;
+    font-size: 1.5rem;
+  }
+  &__week {
+    @include flex($justify: space-between);
+    font-family: $font--main;
+    text-align: right;
+    text-transform: uppercase;
+  }
+  &__day {
+    width: calc(100% / 7);
+    padding: 0.75rem;
+  }
+  &__icon {
+    font-size: 5rem;
+    @include icons;
+  }
+  @include media($size-sm) {
+    font-size: 0.8em;
+  }
+}

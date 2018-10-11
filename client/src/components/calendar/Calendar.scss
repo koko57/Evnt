@@ -1,0 +1,12 @@
+@import '../utils/utils';
+
+.calendar {
+  margin: 100px auto 0;
+  width: 100%;
+  height: calc(100vh - 150px);
+  max-width: 1000px;
+  font-family: $font--main;
+  &__week-row {
+    @include flex;
+  }
+}

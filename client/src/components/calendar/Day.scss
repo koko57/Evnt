@@ -1,0 +1,48 @@
+@import '../utils/utils';
+
+.day {
+  &__cell {
+    width: calc(100% / 7);
+    height: 10vh;
+    border: 1px solid $grey--light;
+    position: relative;
+    overflow: hidden;
+    font-family: $font--main;
+    font-size: 6vh;
+    padding: 0.75rem;
+    color: $grey;
+    transition: 0.2s;
+    &.disabled {
+      color: $grey--light;
+    }
+    &.weekend {
+      color: $violet--light;
+    }
+    @include media($size-md) {
+      font-size: 6vw;
+      line-height: 100%;
+    }
+  }
+  &__date {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.8rem;
+    line-height: 6vh;
+    @include media($size-sm) {
+      bottom: 0.2rem;
+      right: 0.5rem;
+      line-height: auto;
+    }
+  }
+  &__events {
+    position: absolute;
+    font-size: 1.2rem;
+    top: 0.5rem;
+    left: 0.5rem;
+    @include media($size-sm) {
+      font-size: 1rem;
+      top: 0.3rem;
+      left: 0.3rem;
+    }
+  }
+}
