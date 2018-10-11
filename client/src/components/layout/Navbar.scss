@@ -1,0 +1,34 @@
+@import '../utils/utils';
+
+.navbar {
+  height: 70px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: $bg-color;
+  border-bottom: 1px solid $grey--light;
+
+  &__wrapper {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 70px;
+    @include flex($justify: space-between);
+  }
+
+  &__title {
+    font-family: $font--main;
+    font-size: 1.5rem;
+  }
+  &__icon.material-icons {
+    line-height: 70px;
+  }
+  a:active,
+  a:active > .navbar__icon.material-icons {
+    color: $violet--light;
+  }
+  a.selected > .navbar__icon.material-icons {
+    display: none;
+  }
+}
