@@ -16,18 +16,18 @@
     line-height: 70px;
     @include flex($justify: space-between);
   }
-
+  &__logo > a {
+    text-decoration: none;
+  }
   &__title {
     font-family: $font--main;
     font-size: 1.5rem;
   }
   &__icon.material-icons {
+    @include icons;
     line-height: 70px;
   }
-  a:active,
-  a:active > .navbar__icon.material-icons {
-    color: $violet--light;
-  }
+
   a.selected > .navbar__icon.material-icons {
     display: none;
   }

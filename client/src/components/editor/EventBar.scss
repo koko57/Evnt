@@ -1,0 +1,79 @@
+@import '../utils/utils';
+
+.event-bar {
+  @include flex($justify: space-between, $align: center);
+  width: 100%;
+  max-width: 900px;
+  margin: 0.5rem auto;
+  padding: 1rem;
+  @include border($grey--light);
+  @include media($size-md) {
+    @include flex($align: center);
+    padding-left: 2rem;
+  }
+  &__info {
+    @include flex();
+    flex-wrap: wrap;
+    flex: 4;
+    @include media($size-sm) {
+      @include flex(column, center, center);
+    }
+  }
+  &__item {
+    font-family: $font--secondary;
+    padding: 0.5rem;
+    &--name {
+      flex: 4;
+      @include media($size-md) {
+        width: 100%;
+      }
+    }
+    &--date {
+      flex: 3;
+      @include media($size-md) {
+        flex: none;
+        width: 70%;
+      }
+    }
+    &--time {
+      flex: 1;
+      @include media($size-md) {
+        flex: none;
+        width: 30%;
+      }
+    }
+    @include media($size-md) {
+      flex: none;
+    }
+    @include media($size-sm) {
+      width: 100%;
+    }
+  }
+  &__icons {
+    flex: 1;
+    margin-left: 1rem;
+    text-align: right;
+    max-width: 150px;
+    &--panel {
+      @include flex(column);
+    }
+    @include media($size-md) {
+      @include flex(column);
+      flex: none;
+    }
+  }
+  &__icon {
+    display: inline;
+    margin: 0.5rem;
+    @include icons;
+    @include media($size-md) {
+      font-size: 0.7em;
+    }
+  }
+  &__typeIcon {
+    @include radio-colors;
+    vertical-align: middle;
+    cursor: default;
+    margin-right: 0.5rem;
+  }
+}

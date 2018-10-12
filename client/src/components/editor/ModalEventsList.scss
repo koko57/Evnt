@@ -1,0 +1,13 @@
+@import '../utils/utils';
+
+.event-panel {
+  @include flex(column);
+  padding: 1rem 0;
+  &__message {
+    font-family: $font--secondary;
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 2rem auto;
+    color: $violet--dark;
+  }
+}

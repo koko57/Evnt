@@ -1,0 +1,88 @@
+@import '../utils/utils';
+
+.add-event__form {
+  @include flex(column, space-evenly);
+}
+
+.event-info {
+  line-height: 2rem;
+  font-family: $font--secondary;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 1px solid $violet--light;
+  width: 90%;
+  margin: 0.5rem auto;
+  &__message {
+    color: $alert-red;
+    font-family: $font--secondary;
+    font-size: 0.8rem;
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+.event-types {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0 10px;
+  margin-bottom: 1rem;
+  justify-items: stretch;
+  .wrapper {
+    width: 100%;
+    font-family: $font--secondary;
+    line-height: 2rem;
+    text-align: center;
+    @include border;
+    @include radio-colors;
+  }
+  .event-type {
+    opacity: 0;
+    display: inline-block;
+    width: 100%;
+    background-color: $violet--dark;
+    &__label {
+      display: inline-block;
+      text-transform: capitalize;
+      height: 100%;
+      width: 100%;
+    }
+    &:checked + .wrapper {
+      @include radio-colors-inverted;
+    }
+  }
+}
+
+.event-check {
+  @include flex($align: center);
+  &__input {
+    visibility: hidden;
+    position: relative;
+  }
+  &__checkbox {
+    @include icons;
+  }
+  &__label {
+    font-family: $font--secondary;
+    margin-left: 0.2rem;
+  }
+}
+
+.btn {
+  @include border($violet--dark);
+  text-align: center;
+  font-family: $font--main;
+  line-height: 1rem;
+  font-size: 1rem;
+  color: $violet--dark;
+  min-width: 100px;
+  padding: 0.5rem;
+  display: inline-block;
+  margin: 0 auto 1rem;
+  &:first-of-type {
+    margin-top: 2rem;
+  }
+  &:active {
+    background-color: $violet--dark;
+    color: $bg-color;
+  }
+}

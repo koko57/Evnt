@@ -1,0 +1,22 @@
+@import '../utils/utils';
+
+.events-list {
+  height: 80vh;
+  width: 100%;
+  margin-top: 120px;
+  &__wrapper {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  &__month {
+    margin: 2.5rem auto;
+  }
+  &__heading {
+    font-family: $font--main;
+    line-height: 2.5rem;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: $violet--dark;
+  }
+}

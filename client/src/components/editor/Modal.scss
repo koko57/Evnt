@@ -1,0 +1,47 @@
+@import '../utils/utils';
+
+.modal {
+  &__wrapper {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+    background-color: $bg-color--a;
+    @include flex($justify: center, $align: center);
+  }
+  &__window {
+    height: 85vh;
+    width: 60vh;
+    overflow-y: scroll;
+    background-color: $bg-color;
+    @include flex(column);
+    padding: 4.5rem 0 1rem;
+    position: relative;
+    @include border($violet--dark);
+  }
+  &__header {
+    font-family: $font--main;
+    font-size: 1.2rem;
+    margin: 0 auto;
+    width: 70%;
+    @include media($size-md) {
+      width: 80%;
+    }
+  }
+  &__body {
+    margin: 1rem auto;
+    width: 70%;
+    @include media($size-md) {
+      width: 80%;
+    }
+  }
+  &__icon {
+    display: block;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.25rem;
+    @include icons;
+  }
+}
