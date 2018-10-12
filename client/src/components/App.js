@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import Navbar from './Navbar';
-import Calendar from './Calendar';
-import EventsList from './EventsList';
+import Navbar from './layout/Navbar';
+import Calendar from './calendar/Calendar';
+import EventsList from './editor/EventsList';
+import './App.scss';
 
 class App extends Component {
   render() {
