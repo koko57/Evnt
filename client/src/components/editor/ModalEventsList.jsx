@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { format } from 'date-fns';
+import PropTypes from 'prop-types';
+import { format, isSameDay } from 'date-fns';
 import { changeMode } from '../../actions/calendarActions';
 import { getEvents } from '../../actions/eventsActions';
 import EventBar from './EventBar';
 import './ModalEventsList.scss';
 
 class ModalEventsList extends Component {
+  componentDidMount() {
+    document.getElementById('event-panel').focus();
+    this.props.trapFocus();
+  }
   handleClick = () => {
     this.props.changeMode('add');
   };
   render() {
-    const { dayEvents } = this.props;
+    const { events, selectedDate } = this.props;
+    const dayEvents = events.filter(e =>
+      isSameDay(e.date, new Date(selectedDate))
+    );
     const eventsLi = dayEvents.map(e => (
       <li
         className={`events-list__item row ${format(e.date, 'MMMM')}`}
@@ -21,12 +29,12 @@ class ModalEventsList extends Component {
       </li>
     ));
     return (
-      <div className="event-panel">
+      <div className="event-panel" id="event-panel" tabIndex="0">
         {dayEvents.length === 0 && (
           <p className="event-panel__message">No events on this day.</p>
         )}
-        <ul>{eventsLi}</ul>
-        <button className="btn" onClick={this.handleClick}>
+        <ul className="event-panel__list">{eventsLi}</ul>
+        <button className="modal-button--large" onClick={this.handleClick}>
           Add new event
         </button>
       </div>
@@ -38,6 +46,15 @@ const mapStateToProps = state => ({
   selectedDate: state.calendar.selectedDate,
   events: state.events.events
 });
+
+ModalEventsList.propTypes = {
+  dayEvents: PropTypes.array,
+  selectedDate: PropTypes.string.isRequired,
+  events: PropTypes.array.isRequired,
+  getEvents: PropTypes.func.isRequired,
+  changeMode: PropTypes.func.isRequired,
+  trapFocus: PropTypes.func.isRequired
+};
 
 export default connect(
   mapStateToProps,

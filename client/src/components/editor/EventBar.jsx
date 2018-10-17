@@ -13,9 +13,9 @@ import './EventBar.scss';
 
 class EventBar extends Component {
   deleteEvent = e => {
-    this.props.deleteEvent(e.target.dataset.id);
+    this.props.deleteEvent(e.currentTarget.dataset.id);
   };
-  handleClick = e => {
+  editEvent = e => {
     const { selectEvent, openPanel, changeMode, events } = this.props;
     const id = e.currentTarget.dataset.id;
     const selectedEvent = _.find(events, e => e._id === id);
@@ -26,8 +26,8 @@ class EventBar extends Component {
   render() {
     const dateFormat = window.innerWidth > 480 ? 'EEEE, d MMMM' : 'EEE, d MMM';
     const { event, barStyle } = this.props;
-    const panel = barStyle === "panel";
-    const list = barStyle === "list";
+    const panel = barStyle === 'panel';
+    const list = barStyle === 'list';
     return (
       <div className="event-bar">
         <div className="event-bar__info">
@@ -59,22 +59,24 @@ class EventBar extends Component {
             panel ? 'event-bar__icons--panel' : ''
           }`}
         >
-          <i
-            className="material-icons event-bar__icon"
-            title="Edit event"
+          <button
+            className="event-bar__iconBtn event-bar__iconBtn--edit"
             data-id={event._id}
-            onClick={this.handleClick}
+            onClick={this.editEvent}
           >
-            edit
-          </i>
-          <i
-            className="material-icons event-bar__icon"
-            title="Delete event"
+            <i className="event-bar__icon material-icons" title="Edit event">
+              edit
+            </i>
+          </button>
+          <button
+            className="event-bar__iconBtn event-bar__iconBtn--delete"
             data-id={event._id}
             onClick={this.deleteEvent}
           >
-            clear
-          </i>
+            <i className="event-bar__icon material-icons" title="Delete event">
+              clear
+            </i>
+          </button>
         </div>
       </div>
     );
@@ -87,19 +89,17 @@ const mapStateToProps = state => ({
   selectedEvent: state.calendar.selectedEvent
 });
 
-EventBar.propTypes ={
+EventBar.propTypes = {
   event: PropTypes.object.isRequired,
   barStyle: PropTypes.string.isRequired,
   events: PropTypes.array,
   panelOpened: PropTypes.bool,
-  selectedEvent: PropTypes.object,
   getEvents: PropTypes.func.isRequired,
   deleteEvent: PropTypes.func.isRequired,
   selectEvent: PropTypes.func.isRequired,
   openPanel: PropTypes.func.isRequired,
-  changeMode: PropTypes.func.isRequired,
-}
-
+  changeMode: PropTypes.func.isRequired
+};
 
 export default connect(
   mapStateToProps,

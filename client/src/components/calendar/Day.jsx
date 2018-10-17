@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import './Day.scss';
 
 const Day = ({
@@ -26,6 +27,8 @@ const Day = ({
       id={date}
       data-events={count}
       onClick={sameMonth ? handleClick : null}
+      onKeyPress={handleClick}
+      tabIndex="0"
     >
       {count > 0 ? (
         <i
@@ -40,6 +43,10 @@ const Day = ({
   );
 };
 
+const mapStateToProps = state => ({
+  mode: state.calendar.mode
+});
+
 Day.propTypes = {
   sameMonth: PropTypes.bool,
   monthsDiff: PropTypes.number,
@@ -50,4 +57,4 @@ Day.propTypes = {
   events: PropTypes.array
 };
 
-export default Day;
+export default connect(mapStateToProps)(Day);

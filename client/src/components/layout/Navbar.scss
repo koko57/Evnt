@@ -7,14 +7,13 @@
   top: 0;
   background-color: $bg-color;
   border-bottom: 1px solid $grey--light;
-
+  @include flex($align: center);
   &__wrapper {
     width: 90%;
     max-width: 1000px;
-    margin: 0 auto;
+    margin: auto;
     text-align: center;
-    line-height: 70px;
-    @include flex($justify: space-between);
+    @include flex($justify: space-between, $align: center);
   }
   &__logo > a {
     text-decoration: none;
@@ -25,7 +24,6 @@
   }
   &__icon.material-icons {
     @include icons;
-    line-height: 70px;
   }
 
   a.selected > .navbar__icon.material-icons {

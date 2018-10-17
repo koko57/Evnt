@@ -34,7 +34,7 @@ class Calendar extends Component {
 
   componentDidMount() {
     this.props.getEvents();
-  };
+  }
 
   renderCells() {
     const { currentMonth } = this.state;
@@ -69,6 +69,7 @@ class Calendar extends Component {
             weekend={checkWeekend}
             dayOfMonth={dayOfMonth}
             handleClick={this.handleClick}
+            handleKeyPress={this.handleKeyPress}
             events={dayEvents}
             key={date}
           />
@@ -83,7 +84,7 @@ class Calendar extends Component {
       days = [];
     }
     return <div className="calendar__body">{rows}</div>;
-  };
+  }
 
   nextMonth = () => {
     this.setState({
@@ -100,22 +101,31 @@ class Calendar extends Component {
   handleClick = e => {
     const { selectDate, changeMode, openPanel } = this.props;
     const selected = e.currentTarget;
-    console.log(selected.dataset.events);
     let newDate = selected.id;
     selectDate(newDate);
     selected.dataset.events === '0' ? changeMode('add') : changeMode('view');
     openPanel();
   };
 
+  handleKeyPress = (e, fn) => {
+    const code = e.keyCode ? e.keyCode : e.which;
+    if (code === 13) {
+      fn();
+    }
+  };
+
   render() {
     return (
       <div className="main">
-        {this.props.panelOpened && <Modal />}
+        {this.props.panelOpened && (
+          <Modal handleKeyPress={this.handleKeyPress} />
+        )}
         <div className="calendar">
           <CalendarHeader
             currentMonth={this.state.currentMonth}
             prevMonth={this.prevMonth}
             nextMonth={this.nextMonth}
+            handleKeyPress={this.handleKeyPress}
           />
           {this.renderCells()}
         </div>

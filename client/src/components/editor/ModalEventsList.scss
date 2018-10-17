@@ -3,6 +3,9 @@
 .event-panel {
   @include flex(column);
   padding: 1rem 0;
+  &:focus {
+    outline: none;
+  }
   &__message {
     font-family: $font--secondary;
     text-align: center;

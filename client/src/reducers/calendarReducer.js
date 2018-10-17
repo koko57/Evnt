@@ -7,7 +7,7 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
-  selectedEvent: '',
+  selectedEvent: {},
   selectedDate: '',
   panelOpened: false,
   mode: ''

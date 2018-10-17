@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { format, startOfWeek, addDays } from 'date-fns';
 import './CalendarHeader.scss';
 
-const CalendarHeader = ({ currentMonth, prevMonth, nextMonth }) => {
+const CalendarHeader = ({
+  currentMonth,
+  prevMonth,
+  nextMonth,
+  handleKeyPress
+}) => {
   const days = [];
   const dateFormat = window.innerWidth > 480 ? 'EEE' : 'EEEEE';
   let startDate = startOfWeek(currentMonth, {
@@ -19,17 +24,27 @@ const CalendarHeader = ({ currentMonth, prevMonth, nextMonth }) => {
   return (
     <div className="calendar-header">
       <div className="calendar-header__main">
-        <i className="calendar-header__icon material-icons" onClick={prevMonth}>
-          chevron_left
-        </i>
+        <button
+          className="calendar-header__button"
+          onKeyPress={handleKeyPress(prevMonth)}
+          onClick={prevMonth}
+          title="Previous month"
+        >
+          <i className="calendar-header__icon material-icons">chevron_left</i>
+        </button>
         <div className="calendar-header__item">
           <h2 className="calendar-header__month">
             {format(currentMonth, 'MMMM YYYY')}
           </h2>
         </div>
-        <i className="calendar-header__icon material-icons" onClick={nextMonth}>
-          chevron_right
-        </i>
+        <button
+          className="calendar-header__button"
+          onKeyPress={nextMonth}
+          onClick={nextMonth}
+          title="Next month"
+        >
+          <i className="calendar-header__icon material-icons">chevron_right</i>
+        </button>
       </div>
       <div className="calendar-header__week">{days}</div>
     </div>
@@ -39,7 +54,8 @@ const CalendarHeader = ({ currentMonth, prevMonth, nextMonth }) => {
 CalendarHeader.propTypes = {
   currentMonth: PropTypes.object.isRequired,
   prevMonth: PropTypes.func.isRequired,
-  nextMonth: PropTypes.func.isRequired
+  nextMonth: PropTypes.func.isRequired,
+  handleKeyPress: PropTypes.func
 };
 
 export default CalendarHeader;

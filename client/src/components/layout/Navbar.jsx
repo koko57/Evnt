@@ -15,18 +15,22 @@ const Navbar = () => {
         <div className="navbar__links">
           <NavLink
             to="/eventslist"
-            title="Manage your events."
+            title="Manage your events"
             activeClassName="selected"
           >
-            <i className="navbar__icon material-icons">list</i>
+            <i className="navbar__icon material-icons" id="list">
+              list
+            </i>
           </NavLink>
           <NavLink
             exact
             to="/"
-            title="Back to calendar."
+            title="Back to calendar"
             activeClassName="selected"
           >
-            <i className="navbar__icon material-icons">insert_invitation</i>
+            <i className="navbar__icon material-icons" id="calendar">
+              insert_invitation
+            </i>
           </NavLink>
         </div>
       </div>

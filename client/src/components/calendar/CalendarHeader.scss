@@ -20,8 +20,12 @@
     width: calc(100% / 7);
     padding: 0.75rem;
   }
+  &__button {
+    border: none;
+    padding: 0;
+    -webkit-appearance: none;
+  }
   &__icon {
-    font-size: 5rem;
     @include icons;
   }
   @include media($size-sm) {

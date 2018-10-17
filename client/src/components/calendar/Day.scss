@@ -12,11 +12,16 @@
     padding: 0.75rem;
     color: $grey;
     transition: 0.2s;
+    cursor: pointer;
     &.disabled {
       color: $grey--light;
+      cursor: default;
     }
     &.weekend {
       color: $violet--light;
+    }
+    &:hover:not(.disabled) {
+      box-shadow: inset 0 0 1px 2px $violet--light;
     }
     @include media($size-md) {
       font-size: 6vw;
@@ -28,6 +33,7 @@
     bottom: 0.5rem;
     right: 0.8rem;
     line-height: 6vh;
+
     @include media($size-sm) {
       bottom: 0.2rem;
       right: 0.5rem;
@@ -36,11 +42,12 @@
   }
   &__events {
     position: absolute;
+    cursor: default;
     font-size: 1.2rem;
     top: 0.5rem;
     left: 0.5rem;
     @include media($size-sm) {
-      font-size: 1rem;
+      font-size: 0.8rem;
       top: 0.3rem;
       left: 0.3rem;
     }

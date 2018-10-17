@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns'
+import { format } from 'date-fns';
 import { addEvent, getEvents, editEvent } from '../../actions/eventsActions';
 import {
   selectDate,
@@ -22,17 +22,17 @@ class EventForm extends Component {
   };
 
   componentDidMount() {
-    const { selectedEvent: event, selectedDate, getEvents } = this.props;
-    getEvents();
+    const { selectedEvent: event, selectedDate, trapFocus } = this.props;
     const date = selectedDate ? selectedDate : event.date;
-
     this.setState({
       name: event.name ? event.name : '',
       time: event.time ? event.time : '',
-      date: date,
+      date: new Date(date),
       eventType: event.eventType ? event.eventType : '',
       important: event.important ? event.important : false
     });
+    document.getElementById('name').focus();
+    trapFocus();
   }
 
   handleSubmit = e => {
@@ -40,7 +40,6 @@ class EventForm extends Component {
       mode,
       addEvent,
       editEvent,
-      getEvents,
       selectedEvent,
       selectEvent,
       changeMode,
@@ -62,8 +61,7 @@ class EventForm extends Component {
         ? editEvent(selectedEvent._id, newEvent)
         : addEvent(newEvent);
       selectedDate ? changeMode('view') : closePanel();
-      selectEvent('');
-      getEvents();
+      selectEvent({});
     }
   };
 
@@ -72,47 +70,67 @@ class EventForm extends Component {
       [e.target.name]: e.target.value
     });
   };
+
   handleClick = () => {
     this.props.changeMode('view');
   };
 
-  checkIfChecked = e => {
+  checkCheckbox = e => {
     this.setState({
       important: e.target.checked
     });
   };
 
+  selectRadio = e => {
+    const type = e.target.previousSibling.id;
+    this.setState({
+      eventType: type
+    });
+  };
+
   render() {
     const { message, name, date, time, eventType, important } = this.state;
-    const { selectedDate, mode, events } = this.props;
+    const { selectedDate, mode, events, handleKeyPress } = this.props;
+
+    // Rendering radio buttons
     let types = ['music', 'movie', 'art', 'family', 'meeting', 'other'];
     types = types.map(type => {
       return (
-        <div>
+        <div className="event-type" key={type}>
           <input
             name="eventType"
             type="radio"
-            className="event-type"
+            className="event-type__input"
             onChange={this.handleChange}
             value={type}
             id={type}
+            tabIndex="-1"
             checked={eventType === type ? true : false}
           />
-          <div className={`wrapper ${type}`}>
-            <label htmlFor={type} className="event-type__label">{type}</label>
+          <div
+            className={`event-type__wrapper ${type}`}
+            onKeyPress={this.selectRadio}
+            tabIndex="0"
+          >
+            <label htmlFor={type} className="event-type__label">
+              {type}
+            </label>
           </div>
         </div>
       );
     });
 
     return (
-      <div className="add-event__form">
+      <form className="add-event__form" id="event-form">
         <input
           type="text"
           className="event-info event-info--name validate"
           name="name"
+          id="name"
           placeholder="Event name"
           onChange={this.handleChange}
+          onKeyPress={handleKeyPress(this.handleSubmit)}
+          tabIndex="0"
           value={name}
           required
         />
@@ -139,25 +157,37 @@ class EventForm extends Component {
           type="checkbox"
           id="important"
           className="event-check__input"
-          onChange={this.checkIfChecked}
+          onChange={this.checkCheckbox}
         />
-        <label htmlFor="important" className="event-check">
-          <i className="event-check__checkbox material-icons">
-            {important ? 'check_box' : 'check_box_outline_blank'}
-          </i>
-          <span className="event-check__label">Important!</span>
-        </label>
-        <button className="btn btn--submit" onClick={this.handleSubmit}>
+
+        <div className="event-check__wrapper">
+          <label htmlFor="important" className="event-check">
+            <i className="event-check__checkbox material-icons" id="checkIcon">
+              {important ? 'check_box' : 'check_box_outline_blank'}
+            </i>
+            <span className="event-check__label">Important!</span>
+          </label>
+        </div>
+
+        <button
+          className="modal-button--large"
+          onClick={this.handleSubmit}
+          id="submit"
+        >
           Submit
         </button>
         {mode !== 'view' &&
           selectedDate &&
           events.length !== 0 && (
-            <div className="btn btn--back" onClick={this.handleClick}>
+            <button
+              className="modal-button--large"
+              onClick={this.handleClick}
+              id="back"
+            >
               Back
-            </div>
+            </button>
           )}
-      </div>
+      </form>
     );
   }
 }
@@ -174,6 +204,7 @@ EventForm.propTypes = {
   selectedDate: PropTypes.string,
   mode: PropTypes.string,
   events: PropTypes.array,
+  trapFocus: PropTypes.func.isRequired,
   addEvent: PropTypes.func.isRequired,
   getEvents: PropTypes.func.isRequired,
   editEvent: PropTypes.func.isRequired,
