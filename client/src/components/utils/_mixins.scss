@@ -21,8 +21,13 @@
 }
 
 @mixin radio-colors-inverted() {
-  $colors: 'music' $event-violet, 'movie' $event-red, 'art' $event-blue,
-    'family' $event-yellow, 'meeting' $event-green, 'other' $grey--light;
+  $colors:
+    'music' $event-violet,
+    'movie' $event-red,
+    'art' $event-blue,
+    'family' $event-yellow,
+    'meeting' $event-green,
+    'other' $grey--light;
   @each $i in $colors {
     &.#{nth($i, 1)} {
       border-color: nth($i, 2);
@@ -31,6 +36,7 @@
     }
   }
 }
+
 @mixin flex($direction: null, $justify: null, $align: null) {
   display: flex;
   flex-direction: $direction;
@@ -43,6 +49,7 @@
   border-radius: 5px;
   border-color: $border-color;
 }
+
 @mixin icons() {
   cursor: pointer;
   color: $violet--dark;
@@ -53,4 +60,18 @@
   &:active {
     transform: translateY(1px);
   }
+}
+
+@mixin button() {
+  @include border($violet--dark);
+  cursor: pointer;
+  text-align: center;
+  font-family: $font--main;
+  line-height: 1rem;
+  font-size: 1rem;
+  color: $violet--dark;
+  min-width: 100px;
+  padding: 0.5rem;
+  display: inline-block;
+  margin: 0 auto 1rem;
 }

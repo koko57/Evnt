@@ -56,19 +56,12 @@
 }
 
 .modal-button--large {
-  @include border($violet--dark);
-  cursor: pointer;
-  text-align: center;
-  font-family: $font--main;
-  line-height: 1rem;
-  font-size: 1rem;
-  color: $violet--dark;
-  min-width: 100px;
-  padding: 0.5rem;
-  display: inline-block;
-  margin: 0 auto 1rem;
+  @include button;
   &:first-of-type {
     margin-top: 2rem;
+  }
+  &:hover {
+    border-color: $violet--light;
   }
   &:active {
     background-color: $violet--dark;

@@ -8,6 +8,12 @@ import ModalEventsList from './ModalEventsList';
 import './Modal.scss';
 
 class Modal extends Component {
+  handleKeyPress = (e, fn) => {
+    const code = e.keyCode ? e.keyCode : e.which;
+    if (code === 13) {
+      fn();
+    }
+  };
   trapFocus = () => {
     const firstElemId = document.getElementById('modal').firstChild.id;
     const panel = document.getElementById(firstElemId);
@@ -26,12 +32,7 @@ class Modal extends Component {
     });
   };
   render() {
-    const {
-      mode,
-      selectedDate,
-      closePanel,
-      handleKeyPress
-    } = this.props;
+    const { mode, selectedDate, closePanel } = this.props;
     let displayDate = format(new Date(selectedDate), 'eeee, d MMMM');
 
     return (
@@ -50,15 +51,11 @@ class Modal extends Component {
           <div className="modal__body" id="modal">
             {(mode === 'edit' || mode === 'add') && (
               <EventForm
-                handleKeyPress={handleKeyPress}
+                handleKeyPress={this.handleKeyPress}
                 trapFocus={this.trapFocus}
               />
             )}
-            {mode === 'view' && (
-              <ModalEventsList
-                trapFocus={this.trapFocus}
-              />
-            )}
+            {mode === 'view' && <ModalEventsList trapFocus={this.trapFocus} />}
           </div>
         </dialog>
       </div>
