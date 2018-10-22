@@ -22,10 +22,11 @@ import {
   addDays,
   addMonths
 } from 'date-fns';
-import './Calendar.scss';
+import Navbar from '../layout/Navbar';
 import Modal from '../editor/Modal';
 import Day from './Day';
 import CalendarHeader from './CalendarHeader';
+import './Calendar.scss';
 
 class Calendar extends Component {
   state = {
@@ -117,6 +118,7 @@ class Calendar extends Component {
   render() {
     return (
       <div className="main">
+        <Navbar />
         {this.props.panelOpened && (
           <Modal handleKeyPress={this.handleKeyPress} />
         )}

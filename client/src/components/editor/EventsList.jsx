@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { format } from 'date-fns';
 import { getEvents, deleteEvent } from '../../actions/eventsActions';
 import { selectEvent, openPanel } from '../../actions/calendarActions';
+import Navbar from '../layout/Navbar';
 import Modal from './Modal';
 import EventBar from './EventBar';
 import './EventsList.scss';
@@ -26,9 +27,12 @@ class EventsList extends Component {
       </div>
     ));
     return (
-      <div className="events-list">
-        <div className="events-list__wrapper">{months}</div>
-        {panelOpened && <Modal />}
+      <div className="main">
+        <Navbar />
+        <div className="events-list">
+          <div className="events-list__wrapper">{months}</div>
+          {panelOpened && <Modal />}
+        </div>
       </div>
     );
   }

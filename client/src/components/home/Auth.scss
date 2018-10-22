@@ -1,29 +1,38 @@
 @import '../utils/utils';
 
-.auth-form{
-&__wrapper {
-  height: 100vh;
-  width: 100%;
-  @include flex(column, center, center);
-}
-&__form {
-  @include flex(column, space-evenly, center);
-}
-&__input {
-  line-height: 2rem;
-  font-family: $font--secondary;
-  font-size: 1rem;
-  border: none;
-  border-bottom: 1px solid $violet--light;
-  width: 90%;
-  margin: 0.5rem auto;
-  &__message {
-    color: $alert-red;
-    font-family: $font--secondary;
-    font-size: 0.8rem;
-    width: 90%;
-    margin: 0 auto;
+.auth-form {
+  &__wrapper {
+    height: 100vh;
+    width: 100%;
+    @include flex(column, center, center);
   }
-}
+  &__title {
+    font-family: $font--main;
+    font-size: 1.8rem;
+    color: $violet--light;
+  }
+  &__form {
+    @include flex(column, space-evenly, center);
+    margin: 1rem auto 1.5rem;
+  }
+  &__input {
+    line-height: 2rem;
+    font-family: $font--secondary;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid $violet--light;
+    width: 100%;
+    margin: 0.5rem auto;
+    &__message {
+      color: $alert-red;
+      font-family: $font--secondary;
+      font-size: 0.8rem;
+      width: 90%;
+      margin: 0 auto;
+    }
+  }
+  &__btn {
+    @include button;
+  }
 
 }

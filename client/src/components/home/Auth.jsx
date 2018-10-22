@@ -9,7 +9,7 @@ export default class Auth extends Component {
       email: '',
       password: '',
       passwordCheck: '',
-      passwordsMatch: false,
+      passwordsMatch: true,
       message: false
     };
   }
@@ -20,6 +20,15 @@ export default class Auth extends Component {
     });
   };
 
+  checkPassword = e => {
+    this.setState({passwordCheck: e.target.value,
+      passwordsMatch: true})
+    if(this.state.password !== e.target.value) {
+      this.setState({passwordCheck: e.target.value,passwordsMatch: false})
+    } else {
+    return
+}  }
+
   handleSubmit = e => {
     e.preventDefault();
     for (let i in this.state) {
@@ -28,17 +37,18 @@ export default class Auth extends Component {
       } else {
         const newUser = {
           username: this.state.username,
-          email: '',
-          password: ''
+          email: this.state.email,
+          password: this.state.password
         };
       }
     }
   };
   render() {
-    const { username, email, password, passwordCheck, message } = this.state;
+    const { username, email, password, passwordCheck, passwordsMatch, message } = this.state;
+    const { register } = this.props;
     return (
       <div className="auth-form__wrapper">
-        <h1>Create Account</h1>
+        <h1 className="auth-form__title">Create Account</h1>
         <form onSubmit={this.handleSubmit} className="auth-form__form">
           <input
             type="text"
@@ -49,7 +59,10 @@ export default class Auth extends Component {
             value={username}
             placeholder="username"
           />
-          {!username && message && <p className="event-info__message" />}
+          {!username &&
+            message && (
+              <p className="event-info__message">Username is required!</p>
+            )}
           <input
             type="email"
             name="email"
@@ -81,7 +94,7 @@ export default class Auth extends Component {
             name="passwordCheck"
             id="passwordCheck"
             className="auth-form__input"
-            onChange={this.handleChange}
+            onChange={this.checkPassword}
             value={passwordCheck}
             placeholder="confirm password"
           />
@@ -89,13 +102,16 @@ export default class Auth extends Component {
             message && (
               <p className="event-info__message">Confirm your password!</p>
             )}
-          <button type="submit" className="splash__btn">
-            Register
-          </button>
-          <a href="/" className="splash__btn">
-            Cancel
-          </a>
+            {!passwordsMatch && (
+              <p className="event-info__message">Passwords do not match!</p>
+            )}
         </form>
+        <button type="submit" className="auth-form__btn" onClick={this.handleSubmit}>
+          Register
+        </button>
+        <a href="/" className="auth-form__btn">
+          Cancel
+        </a>
       </div>
     );
   }

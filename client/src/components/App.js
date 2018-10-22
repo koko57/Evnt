@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import Navbar from './layout/Navbar';
 import Calendar from './calendar/Calendar';
 import Homepage from './home/Homepage';
 import Auth from './home/Auth';
@@ -13,11 +12,12 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="app">
-          <Navbar />
           <Switch>
             <Route exact path="/" component={Homepage} />
+            <Route path="/my-events" component={Calendar} />
             <Route path="/eventslist" component={EventsList} />
-            <Route path="/register" component={Auth} />
+            <Route path="/register" component={() => <Auth register={true}/>} />
+            <Route path="/login" component={Auth} register={false}/>
           </Switch>
         </div>
       </BrowserRouter>
