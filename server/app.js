@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
@@ -27,16 +28,13 @@ app.use(
     saveUninitialized: false
   })
 );
+app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-app.get('/', (req, res) => {
-  res.send(res);
-});
 
 app.use('/api/events', events);
 app.use('/api/auth', auth);

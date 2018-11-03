@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { format, isSameDay } from 'date-fns';
-import { changeMode } from '../../actions/calendarActions';
-import { getEvents } from '../../actions/eventsActions';
+import { changeMode } from '../../store/actions/calendarActions';
+import { getEvents } from '../../store/actions/eventsActions';
 import EventBar from './EventBar';
 import './ModalEventsList.scss';
 

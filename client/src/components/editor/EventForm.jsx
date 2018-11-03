@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
-import { addEvent, getEvents, editEvent } from '../../actions/eventsActions';
+import { addEvent, getEvents, editEvent } from '../../store/actions/eventsActions';
 import {
   selectDate,
   changeMode,
   closePanel,
   selectEvent
-} from '../../actions/calendarActions';
+} from '../../store/actions/calendarActions';
 import './EventForm.scss';
 
 class EventForm extends Component {

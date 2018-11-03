@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
-import { selectDate, closePanel } from '../../actions/calendarActions';
+import { selectDate, closePanel } from '../../store/actions/calendarActions';
 import EventForm from './EventForm';
 import ModalEventsList from './ModalEventsList';
 import './Modal.scss';

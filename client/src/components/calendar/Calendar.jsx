@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getEvents } from '../../actions/eventsActions';
+import { getEvents } from '../../store/actions/eventsActions';
 import {
   selectDate,
   openPanel,
   changeMode
-} from '../../actions/calendarActions';
+} from '../../store/actions/calendarActions';
 import {
   format,
   startOfMonth,

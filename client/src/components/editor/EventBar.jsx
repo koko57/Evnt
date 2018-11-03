@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { format } from 'date-fns';
-import { getEvents, deleteEvent } from '../../actions/eventsActions';
+import { getEvents, deleteEvent } from '../../store/actions/eventsActions';
 import {
   selectEvent,
   openPanel,
   changeMode
-} from '../../actions/calendarActions';
+} from '../../store/actions/calendarActions';
 import './EventBar.scss';
 
 class EventBar extends Component {
