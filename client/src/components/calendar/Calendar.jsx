@@ -24,6 +24,7 @@ import {
 } from 'date-fns';
 import Navbar from '../layout/Navbar';
 import Modal from '../editor/Modal';
+import AuthHoc from '../hoc/AuthHoc';
 import Day from './Day';
 import CalendarHeader from './CalendarHeader';
 import './Calendar.scss';
@@ -34,7 +35,7 @@ class Calendar extends Component {
   };
 
   componentDidMount() {
-    this.props.getEvents();
+    this.props.getEvents(this.props.loggedUser);
   }
 
   renderCells() {
@@ -149,10 +150,13 @@ Calendar.propTypes = {
 const mapStateToProps = state => ({
   selectedDate: state.events.selectedDate,
   events: state.events.events,
-  panelOpened: state.calendar.panelOpened
+  panelOpened: state.calendar.panelOpened,
+  loggedUser: state.auth.loggedUser
 });
 
-export default connect(
-  mapStateToProps,
-  { getEvents, selectDate, openPanel, changeMode }
-)(Calendar);
+export default AuthHoc(
+  connect(
+    mapStateToProps,
+    { getEvents, selectDate, openPanel, changeMode }
+  )(Calendar)
+);

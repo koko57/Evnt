@@ -1,0 +1,24 @@
+@import '../utils/utils';
+
+.alert-modal {
+  &__wrapper {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+    background-color: $bg-color--a;
+    @include flex($justify: center, $align: center);
+  }
+  &__window {
+    height: 15rem;
+    background-color: $bg-color;
+    @include flex(column, center, center);
+    padding: 3rem;
+    @include border($violet--dark);
+    font-family: $font--main;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+}

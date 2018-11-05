@@ -9,11 +9,12 @@ import Navbar from '../layout/Navbar';
 import Modal from './Modal';
 import EventBar from './EventBar';
 import './EventsList.scss';
+import AuthHoc from '../hoc/AuthHoc';
 
 class EventsList extends Component {
-  componentDidMount() {
-    this.props.getEvents();
-  }
+  // componentDidMount() {
+  //   // this.props.getEvents();
+  // }
 
   render() {
     let { events, panelOpened } = this.props;
@@ -52,7 +53,9 @@ EventsList.propTypes = {
   selectEvent: PropTypes.func.isRequired
 };
 
-export default connect(
-  mapStateToProps,
-  { getEvents, deleteEvent, openPanel, selectEvent }
-)(EventsList);
+export default AuthHoc(
+  connect(
+    mapStateToProps,
+    { getEvents, deleteEvent, openPanel, selectEvent }
+  )(EventsList)
+);
