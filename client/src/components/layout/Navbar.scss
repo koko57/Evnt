@@ -25,7 +25,9 @@
   &__icon.material-icons {
     @include icons;
   }
-
+  &__link {
+    margin-left: 1rem;
+  }
   a.selected > .navbar__icon.material-icons {
     display: none;
   }

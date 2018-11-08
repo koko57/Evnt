@@ -1,9 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
+import { signOut } from '../../store/actions/authActions';
 import './Navbar.scss';
 
-const Navbar = () => {
+const Navbar = props => {
   return (
     <nav className="navbar">
       <div className="navbar__wrapper">
@@ -17,6 +19,7 @@ const Navbar = () => {
             to="/eventslist"
             title="Manage your events"
             activeClassName="selected"
+            className="navbar__link"
           >
             <i className="navbar__icon material-icons" id="list">
               list
@@ -27,9 +30,15 @@ const Navbar = () => {
             to="/"
             title="Back to calendar"
             activeClassName="selected"
+            className="navbar__link"
           >
             <i className="navbar__icon material-icons" id="calendar">
               insert_invitation
+            </i>
+          </NavLink>
+          <NavLink to="/welcome" title="Log Out" onClick={props.signOut} className="navbar__link">
+            <i className="navbar__icon material-icons" id="calendar">
+              power_settings_new
             </i>
           </NavLink>
         </div>
@@ -38,4 +47,9 @@ const Navbar = () => {
   );
 };
 
-export default withRouter(Navbar);
+export default withRouter(
+  connect(
+    null,
+    { signOut }
+  )(Navbar)
+);
