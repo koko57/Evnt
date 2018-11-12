@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
-import { addEvent, getEvents, editEvent } from '../../store/actions/eventsActions';
+import {
+  addEvent,
+  getEvents,
+  editEvent
+} from '../../store/actions/eventsActions';
 import {
   selectDate,
   changeMode,
@@ -22,14 +26,20 @@ class EventForm extends Component {
   };
 
   componentDidMount() {
-    const { selectedEvent: event, selectedDate, trapFocus } = this.props;
+    const {
+      selectedEvent: event,
+      selectedDate,
+      trapFocus,
+      loggedUser
+    } = this.props;
     const date = selectedDate ? selectedDate : event.date;
     this.setState({
       name: event.name ? event.name : '',
       time: event.time ? event.time : '',
       date: new Date(date),
       eventType: event.eventType ? event.eventType : '',
-      important: event.important ? event.important : false
+      important: event.important ? event.important : false,
+      user: loggedUser
     });
     document.getElementById('name').focus();
     trapFocus();
@@ -55,7 +65,8 @@ class EventForm extends Component {
         time: this.state.time,
         date: this.state.date,
         eventType: this.state.eventType,
-        important: this.state.important
+        important: this.state.important,
+        user: this.state.user
       };
       mode === 'edit'
         ? editEvent(selectedEvent._id, newEvent)
@@ -176,17 +187,15 @@ class EventForm extends Component {
         >
           Submit
         </button>
-        {mode !== 'view' &&
-          selectedDate &&
-          events.length !== 0 && (
-            <button
-              className="modal-button--large"
-              onClick={this.handleClick}
-              id="back"
-            >
-              Back
-            </button>
-          )}
+        {mode !== 'view' && selectedDate && events.length !== 0 && (
+          <button
+            className="modal-button--large"
+            onClick={this.handleClick}
+            id="back"
+          >
+            Back
+          </button>
+        )}
       </form>
     );
   }
@@ -196,7 +205,8 @@ const mapStateToProps = state => ({
   selectedEvent: state.calendar.selectedEvent,
   selectedDate: state.calendar.selectedDate,
   mode: state.calendar.mode,
-  events: state.events.events
+  events: state.events.events,
+  loggedUser: state.auth.loggedUser
 });
 
 EventForm.propTypes = {

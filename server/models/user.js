@@ -12,15 +12,9 @@ const UserSchema = new Schema({
   },
   password: {
     type: String
-  },
-  events: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Event'
-    }
-  ]
+  }
 });
 
-UserSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
+UserSchema.plugin(passportLocalMongoose);
 
 module.exports = User = mongoose.model('user', UserSchema);

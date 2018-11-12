@@ -2,17 +2,26 @@ const express = require('express');
 const router = express.Router();
 
 const Event = require('../models/event');
+const User = require('../models/user');
 
-router.get('/', (req, res) => {
-  Event.find()
+router.get('/:user', (req, res) => {
+  Event.find({ user: req.params.user })
     .sort({ date: 1 })
     .then(events => res.json(events))
     .catch(err => console.log(err));
 });
 
-router.post('/', (req, res) => {
+router.post('/:user', (req, res) => {
+  // const user = User.findById(req.params.user);
   Event.create(req.body)
-    .then(event => res.json(event))
+    .then(event => {
+      User.findByIdAndUpdate(req.params.user,
+        {$push: {events: event}}
+    ).then(data => {
+        console.log(data);
+    })
+      return res.json(event);
+    })
     .catch(err => console.log(err));
 });
 

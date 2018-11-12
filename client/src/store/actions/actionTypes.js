@@ -7,4 +7,9 @@ export const SELECT_EVENT = 'SELECT_EVENT';
 export const OPEN_PANEL = 'OPEN_PANEL';
 export const CLOSE_PANEL = 'CLOSE_PANEL';
 export const CHANGE_MODE = 'CHANGE_MODE';
+export const SHOW_MESSAGE = 'SHOW_MESSAGE';
+export const SIGN_UP = 'SIGN_UP';
+export const SIGN_IN = 'SIGN_IN';
+export const SIGN_OUT = 'SIGN_OUT';
+
 

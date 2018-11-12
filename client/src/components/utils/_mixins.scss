@@ -74,4 +74,11 @@
   padding: 0.5rem;
   display: inline-block;
   margin: 0 auto 1rem;
+  &:hover {
+    border-color: $violet--light;
+  }
+  &:active {
+    background-color: $violet--dark;
+    color: $bg-color;
+  }
 }

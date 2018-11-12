@@ -31,7 +31,10 @@ class EventsList extends Component {
       <div className="main">
         <Navbar />
         <div className="events-list">
-          <div className="events-list__wrapper">{months}</div>
+          <div className="events-list__wrapper">
+            {!months.length && <p className="events-list__message">No events planned.</p>}
+            {months}
+          </div>
           {panelOpened && <Modal />}
         </div>
       </div>

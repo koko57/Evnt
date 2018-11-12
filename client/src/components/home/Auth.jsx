@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import { connect } from 'react-redux';
+import { signIn, signUp } from '../../store/actions/authActions';
 import './Auth.scss';
+import AlertModal from '../layout/AlertModal';
 
-export default class Auth extends Component {
+class Auth extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,20 +43,25 @@ export default class Auth extends Component {
       password: this.state.password
     };
     const user = {
-      username: this.state.username,
+      email: this.state.email,
       password: this.state.password
-    }
+    };
 
     if (this.props.register) {
-      axios.post('/api/auth/register', newUser);
+      this.props.signUp(newUser);
     } else {
-      axios.post('/api/auth/login', user);
+      this.props.signIn(user);
     }
-
-
     for (let i in this.state) {
-      if (!this.state.i) {
+      if (!i) {
+        e.preventDefault();
         return this.setState({ message: true });
+      } else {
+        if (this.props.register) {
+          this.props.signUp(newUser);
+        } else {
+          this.props.signIn(user);
+        }
       }
     }
   };
@@ -67,17 +74,35 @@ export default class Auth extends Component {
       passwordsMatch,
       message
     } = this.state;
-    const { register } = this.props;
+    const { register, error } = this.props;
     return (
       <div className="auth-form__wrapper">
+        {error && <AlertModal message={error} />}
         {register ? (
           <h1 className="auth-form__title">Create Account</h1>
         ) : (
           <h1 className="auth-form__title">Sign In</h1>
         )}
-        <form onSubmit={this.handleSubmit} className="auth-form__form"
-        action={register ? "/register" : "/login"} method="POST">
-
+        <form
+          onSubmit={this.handleSubmit}
+          className="auth-form__form"
+          action={register ? '/register' : '/login'}
+          method="POST"
+        >
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="auth-form__input"
+            onChange={this.handleChange}
+            value={email}
+            placeholder="email"
+          />
+          {!email &&
+            message && (
+              <p className="event-info__message">Email is required!</p>
+            )}
+          {register && (
             <input
               type="text"
               name="username"
@@ -87,24 +112,11 @@ export default class Auth extends Component {
               value={username}
               placeholder="username"
             />
-
-          {
+          )}{' '}
+          {register &&
             !username &&
             message && (
               <p className="event-info__message">Username is required!</p>
-            )}
-         {register && <input
-            type="email"
-            name="email"
-            id="email"
-            className="auth-form__input"
-            onChange={this.handleChange}
-            value={email}
-            placeholder="youremail@email.com"
-          />
-         } {register && !email &&
-            message && (
-              <p className="event-info__message">Email is required!</p>
             )}
           <input
             type="password"
@@ -139,16 +151,21 @@ export default class Auth extends Component {
             <p className="event-info__message">Passwords do not match!</p>
           )}
         </form>
-        <button
-          className="auth-form__btn"
-          onClick={this.handleSubmit}
-        >
+        <button className="auth-form__btn" onClick={this.handleSubmit}>
           {register ? 'Register' : 'Sign In'}
         </button>
-        <a href="/" className="auth-form__btn">
+        <a href="/welcome" className="auth-form__btn">
           Cancel
         </a>
       </div>
     );
   }
 }
+const mapStateToProps = state => ({
+  error: state.auth.message
+});
+
+export default connect(
+  mapStateToProps,
+  { signIn, signUp }
+)(Auth);

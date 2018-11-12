@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedDate: '',
-        selectedEvent: '',
+        selectedEvent: {},
         panelOpened: false,
         mode: ''
       };

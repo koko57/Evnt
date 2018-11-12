@@ -1,13 +1,8 @@
 import axios from 'axios';
-import {
-  GET_EVENTS,
-  ADD_EVENT,
-  DELETE_EVENT,
-  EDIT_EVENT,
-} from './actionTypes';
+import { GET_EVENTS, ADD_EVENT, DELETE_EVENT, EDIT_EVENT } from './actionTypes';
 
-export const getEvents = () => dispatch => {
-  axios.get('/api/events').then(res => {
+export const getEvents = user => dispatch => {
+  axios.get(`/api/events/${user}`).then(res => {
     dispatch({
       type: GET_EVENTS,
       payload: res.data
@@ -16,7 +11,7 @@ export const getEvents = () => dispatch => {
 };
 
 export const addEvent = event => dispatch => {
-  axios.post('/api/events', event).then(res => {
+  axios.post('/api/events/', event).then(res => {
     dispatch({
       type: ADD_EVENT,
       payload: res.data
