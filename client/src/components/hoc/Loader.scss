@@ -1,0 +1,49 @@
+@import '../utils/utils';
+
+.loader {
+  position: absolute;
+  z-index: 999999999;
+  width: 100%;
+  height: 100%;
+  @include flex(column, center, center)
+}
+
+.circle {
+  border: 2px solid transparent;
+  animation: circle 3s ease-in infinite;
+  &--outer {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border-bottom-color: $violet--dark;
+    border-left-color: $violet--dark;
+    @include flex(column, center, center);
+  }
+  &--inner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border-top-color: $violet--light;
+    border-right-color: $violet--light;
+  }
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    background-color: rgba($color: #fff, $alpha: 0.6);
+    @include flex(column, center, center);
+  }
+}
+
+@keyframes circle {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

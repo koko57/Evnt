@@ -8,7 +8,7 @@ const AlertModal = ({ message, showMessage }) => {
     <div className="alert-modal__wrapper">
       <div className="alert-modal__window">
         <p className="alert-modal__message">{message}</p>
-        <button className="modal-button--large" onClick={() => showMessage('')} id="back">
+        <button className="modal-button--large" onClick={() => showMessage('')} id="back" autoFocus>
           OK
         </button>
       </div>

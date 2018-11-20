@@ -14,6 +14,7 @@
   &__form {
     @include flex(column, space-evenly, center);
     margin: 1rem auto 1.5rem;
+    text-align: left;
   }
   &__input {
     line-height: 2rem;
@@ -21,18 +22,19 @@
     font-size: 1rem;
     border: none;
     border-bottom: 1px solid $violet--light;
-    width: 100%;
+    width: 12rem;
     margin: 0.5rem auto;
-    &__message {
-      color: $alert-red;
-      font-family: $font--secondary;
-      font-size: 0.8rem;
-      width: 90%;
-      margin: 0 auto;
-    }
   }
   &__btn {
     @include button;
   }
-
+  &__message {
+    color: $alert-red;
+    font-family: $font--secondary;
+    font-size: 0.8rem;
+    line-height: 1rem;
+    width: 100%;
+    max-width: 11rem;
+    word-break: break-word;
+  }
 }

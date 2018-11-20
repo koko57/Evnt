@@ -25,6 +25,7 @@ import {
 import Navbar from '../layout/Navbar';
 import Modal from '../editor/Modal';
 import AuthHoc from '../hoc/AuthHoc';
+import Loader from '../hoc/Loader';
 import Day from './Day';
 import CalendarHeader from './CalendarHeader';
 import './Calendar.scss';
@@ -154,9 +155,9 @@ const mapStateToProps = state => ({
   loggedUser: state.auth.loggedUser
 });
 
-export default AuthHoc(
+export default Loader(AuthHoc(
   connect(
     mapStateToProps,
     { getEvents, selectDate, openPanel, changeMode }
-  )(Calendar)
+  )(Calendar))
 );

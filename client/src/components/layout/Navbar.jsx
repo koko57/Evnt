@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { signOut } from '../../store/actions/authActions';
 import './Navbar.scss';
 
-const Navbar = props => {
+const Navbar = ({signOut, user}) => {
   return (
     <nav className="navbar">
       <div className="navbar__wrapper">
@@ -14,6 +14,7 @@ const Navbar = props => {
             <h1 className="navbar__title">Evnt</h1>
           </Link>
         </div>
+        <div>{user.name}</div>
         <div className="navbar__links">
           <NavLink
             to="/eventslist"
@@ -36,7 +37,7 @@ const Navbar = props => {
               insert_invitation
             </i>
           </NavLink>
-          <NavLink to="/welcome" title="Log Out" onClick={props.signOut} className="navbar__link">
+          <NavLink to="/welcome" title="Log Out" onClick={signOut} className="navbar__link">
             <i className="navbar__icon material-icons" id="calendar">
               power_settings_new
             </i>
@@ -47,9 +48,13 @@ const Navbar = props => {
   );
 };
 
+const mapStateToProps = state => ({
+  user: state.auth.loggedUser
+})
+
 export default withRouter(
   connect(
-    null,
+    mapStateToProps,
     { signOut }
   )(Navbar)
 );

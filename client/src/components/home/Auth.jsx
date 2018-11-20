@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signIn, signUp } from '../../store/actions/authActions';
+import { loading } from '../../store/actions/calendarActions';
+import Loader from '../hoc/Loader';
 import './Auth.scss';
 import AlertModal from '../layout/AlertModal';
 
@@ -8,62 +10,87 @@ class Auth extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      email: '',
-      password: '',
-      passwordCheck: '',
+      username: { value: '', valid: true, msg: false },
+      email: { value: '', valid: true, msg: false },
+      password: { value: '', valid: true, msg: false },
+      passwordCheck: { value: '', valid: true, msg: false },
       passwordsMatch: true,
-      message: false
+      validForm: true
     };
   }
-
+  componentDidMount() {
+    this.props.loading(false);
+  }
   handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+    const pattern = {
+      username: /^[a-z\d]{3,12}$/i,
+      email: /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/,
+      password: /(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)[0-9a-zA-Z]*$/,
+      passwordCheck: /(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)[0-9a-zA-Z]*$/
+    };
+    if (!e.target.value.match(pattern[e.target.name])) {
+      this.setState({
+        [e.target.name]: { value: e.target.value, valid: false, msg: true }
+      });
+    } else {
+      this.setState({
+        [e.target.name]: { value: e.target.value, valid: true, msg: false }
+      });
+    }
   };
 
   checkPassword = e => {
-    this.setState({
-      passwordCheck: e.target.value,
-      passwordsMatch: true
-    });
-    if (this.state.password !== e.target.value) {
-      this.setState({ passwordCheck: e.target.value, passwordsMatch: false });
+    if (this.state.password.value !== e.target.value) {
+      this.setState({
+        passwordCheck: { ...this.state.passwordCheck, value: e.target.value },
+        passwordsMatch: false,
+        validForm: false
+      });
     } else {
-      return;
+      this.setState({
+        passwordsMatch: true,
+        validForm: true
+      });
+    }
+  };
+
+  validate = () => {
+    const newUser = {
+      username: this.state.username.value,
+      email: this.state.email.value,
+      password: this.state.password.value
+    };
+    const user = {
+      email: this.state.email.value,
+      password: this.state.password.value
+    };
+    const usr = this.props.register ? newUser : user;
+    for (let i in usr) {
+      if (!usr[i]) {
+        return this.setState({
+          [usr[i]]: { ...this.state[user[i]], msg: true },
+          validForm: false
+        });
+      }
     }
   };
 
   handleSubmit = e => {
     e.preventDefault();
+    const { username, email, password } = this.state;
     const newUser = {
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password
+      username: username.value,
+      email: email.value,
+      password: password.value
     };
     const user = {
-      email: this.state.email,
-      password: this.state.password
+      email: email.value,
+      password: password.value
     };
-
-    if (this.props.register) {
-      this.props.signUp(newUser);
-    } else {
-      this.props.signIn(user);
-    }
-    for (let i in this.state) {
-      if (!i) {
-        e.preventDefault();
-        return this.setState({ message: true });
-      } else {
-        if (this.props.register) {
-          this.props.signUp(newUser);
-        } else {
-          this.props.signIn(user);
-        }
-      }
-    }
+    const { register, signUp, signIn } = this.props;
+    const { validForm } = this.state;
+    this.validate();
+    register && validForm ? signUp(newUser) : signIn(user);
   };
   render() {
     const {
@@ -71,9 +98,9 @@ class Auth extends Component {
       email,
       password,
       passwordCheck,
-      passwordsMatch,
-      message
+      passwordsMatch
     } = this.state;
+
     const { register, error } = this.props;
     return (
       <div className="auth-form__wrapper">
@@ -95,13 +122,15 @@ class Auth extends Component {
             id="email"
             className="auth-form__input"
             onChange={this.handleChange}
-            value={email}
+            value={email.value}
             placeholder="email"
           />
-          {!email &&
-            message && (
-              <p className="event-info__message">Email is required!</p>
-            )}
+          {!email.value && email.msg && (
+            <p className="auth-form__message">Email is required!</p>
+          )}
+          {!email.valid && email.msg && (
+            <p className="auth-form__message">Wrong email format</p>
+          )}
           {register && (
             <input
               type="text"
@@ -109,28 +138,36 @@ class Auth extends Component {
               id="username"
               className="auth-form__input"
               onChange={this.handleChange}
-              value={username}
+              value={username.value}
               placeholder="username"
             />
           )}{' '}
-          {register &&
-            !username &&
-            message && (
-              <p className="event-info__message">Username is required!</p>
-            )}
+          {register && !username.value && username.msg && (
+            <p className="auth-form__message">Username is required!</p>
+          )}
+          {register && !username.valid && username.msg && (
+            <p className="auth-form__message">
+              Username must be 3 to 12 characters long.
+            </p>
+          )}
           <input
             type="password"
             name="password"
             id="password"
             className="auth-form__input"
             onChange={this.handleChange}
-            value={password}
+            value={password.value}
             placeholder="password"
           />
-          {!password &&
-            message && (
-              <p className="event-info__message">Password is required!</p>
-            )}
+          {!password.value && password.msg && (
+            <p className="auth-form__message">Password is required!</p>
+          )}
+          {!password.valid && password.msg && (
+            <p className="auth-form__message">
+              Password must be min 8 characters long and contain 1 uppercase
+              letter and 1 number
+            </p>
+          )}
           {register && (
             <input
               type="password"
@@ -138,17 +175,15 @@ class Auth extends Component {
               id="passwordCheck"
               className="auth-form__input"
               onChange={this.checkPassword}
-              value={passwordCheck}
+              value={passwordCheck.value}
               placeholder="confirm password"
             />
           )}
-          {register &&
-            !passwordCheck &&
-            message && (
-              <p className="event-info__message">Confirm your password!</p>
-            )}
+          {register && !passwordCheck.value && passwordCheck.msg && (
+            <p className="auth-form__message">Confirm your password!</p>
+          )}
           {!passwordsMatch && (
-            <p className="event-info__message">Passwords do not match!</p>
+            <p className="auth-form__message">Passwords do not match!</p>
           )}
         </form>
         <button className="auth-form__btn" onClick={this.handleSubmit}>
@@ -165,7 +200,9 @@ const mapStateToProps = state => ({
   error: state.auth.message
 });
 
-export default connect(
-  mapStateToProps,
-  { signIn, signUp }
-)(Auth);
+export default Loader(
+  connect(
+    mapStateToProps,
+    { signIn, signUp, loading }
+  )(Auth)
+);

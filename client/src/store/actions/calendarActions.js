@@ -3,7 +3,7 @@ SELECT_DATE,
 SELECT_EVENT,
 OPEN_PANEL,
 CLOSE_PANEL,
-CHANGE_MODE
+CHANGE_MODE, LOADING
 } from './actionTypes';
 
 export const selectDate = date => dispatch => {
@@ -36,5 +36,12 @@ export const changeMode = mode => dispatch => {
   dispatch({
     type: CHANGE_MODE,
     payload: mode
+  });
+};
+
+export const loading = bool => dispatch => {
+  dispatch({
+    type: LOADING,
+    payload: bool
   });
 };

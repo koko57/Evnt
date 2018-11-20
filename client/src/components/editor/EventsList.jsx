@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { format } from 'date-fns';
 import { getEvents, deleteEvent } from '../../store/actions/eventsActions';
-import { selectEvent, openPanel } from '../../store/actions/calendarActions';
+import { selectEvent, openPanel, loading } from '../../store/actions/calendarActions';
 import Navbar from '../layout/Navbar';
 import Modal from './Modal';
 import EventBar from './EventBar';
 import './EventsList.scss';
 import AuthHoc from '../hoc/AuthHoc';
+import Loader from '../hoc/Loader';
 
 class EventsList extends Component {
-  // componentDidMount() {
-  //   // this.props.getEvents();
-  // }
-
+  componentDidMount() {
+    this.props.loading(false);
+  }
   render() {
     let { events, panelOpened } = this.props;
     let months = _.uniq(events.map(e => format(e.date, 'MMMM YYYY')));
@@ -56,9 +56,9 @@ EventsList.propTypes = {
   selectEvent: PropTypes.func.isRequired
 };
 
-export default AuthHoc(
+export default Loader(AuthHoc(
   connect(
     mapStateToProps,
-    { getEvents, deleteEvent, openPanel, selectEvent }
-  )(EventsList)
+    { getEvents, deleteEvent, openPanel, selectEvent, loading }
+  )(EventsList))
 );

@@ -3,14 +3,16 @@ import {
   SELECT_EVENT,
   OPEN_PANEL,
   CLOSE_PANEL,
-  CHANGE_MODE
+  CHANGE_MODE,
+  LOADING
 } from '../actions/actionTypes';
 
 const initialState = {
   selectedEvent: {},
   selectedDate: '',
   panelOpened: false,
-  mode: ''
+  mode: '',
+  isLoading: true
 };
 
 export default (state = initialState, action) => {
@@ -42,6 +44,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         mode: action.payload
+      };
+    case LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
       };
     default:
       return {
