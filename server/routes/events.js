@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const Event = require('../models/event');
-const User = require('../models/user');
 
 router.get('/:user', (req, res) => {
   Event.find({ user: req.params.user })
@@ -11,18 +10,10 @@ router.get('/:user', (req, res) => {
     .catch(err => console.log(err));
 });
 
-router.post('/:user', (req, res) => {
-  // const user = User.findById(req.params.user);
+router.post('/', (req, res) => {
   Event.create(req.body)
-    .then(event => {
-      User.findByIdAndUpdate(req.params.user,
-        {$push: {events: event}}
-    ).then(data => {
-        console.log(data);
-    })
-      return res.json(event);
-    })
-    .catch(err => console.log(err));
+  .then(event => res.json(event))
+  .catch(err => console.log(err));
 });
 
 router.put('/:id', (req, res) => {

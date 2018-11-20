@@ -5,11 +5,12 @@ const jwt = require('jsonwebtoken');
 const AuthController = {};
 
 AuthController.register = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
   try {
     User.register(
       new User({
-        username: email
+        username,
+        email
       }),
       password,
       err => {
