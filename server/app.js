@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const cors = require('cors');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -10,7 +11,7 @@ const auth = require('./routes/auth');
 const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
-
+const expressValidator = require('express-validator');
 const app = express();
 
 const mongoURI = 'mongodb://koko:lama90@ds257372.mlab.com:57372/evnt';
@@ -25,15 +26,17 @@ mongoose
 
 app.use(bodyParser.json());
 app.use(
-  require('express-session')({
+  session({
     secret: 'haifhdlhafkdbacjsbickhsa',
     resave: false,
     saveUninitialized: false
   })
 );
+
 app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(expressValidator());
 
 passport.use(
   new LocalStrategy(

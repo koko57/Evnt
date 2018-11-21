@@ -2,6 +2,7 @@ const User = require('../models/user');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+
 const AuthController = {};
 
 AuthController.register = async (req, res) => {
