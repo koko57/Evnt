@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { signOut } from '../../store/actions/authActions';
 import './Navbar.scss';
 
-const Navbar = ({signOut, user}) => {
+const Navbar = ({ signOut }) => {
   return (
     <nav className="navbar">
       <div className="navbar__wrapper">
@@ -14,7 +15,6 @@ const Navbar = ({signOut, user}) => {
             <h1 className="navbar__title">Evnt</h1>
           </Link>
         </div>
-        <div>{user.name}</div>
         <div className="navbar__links">
           <NavLink
             to="/eventslist"
@@ -37,7 +37,12 @@ const Navbar = ({signOut, user}) => {
               insert_invitation
             </i>
           </NavLink>
-          <NavLink to="/welcome" title="Log Out" onClick={signOut} className="navbar__link">
+          <NavLink
+            to="/welcome"
+            title="Log Out"
+            onClick={signOut}
+            className="navbar__link"
+          >
             <i className="navbar__icon material-icons" id="calendar">
               power_settings_new
             </i>
@@ -48,13 +53,13 @@ const Navbar = ({signOut, user}) => {
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.auth.loggedUser
-})
+Navbar.propTypes = {
+  signOut: PropTypes.func.isRequired
+};
 
 export default withRouter(
   connect(
-    mapStateToProps,
+    null,
     { signOut }
   )(Navbar)
 );

@@ -9,14 +9,20 @@ import './App.scss';
 
 class App extends Component {
   render() {
-    const {location} = this.props;
+    const { location } = this.props;
     return (
       <div className="app">
-          <Route exact path="/" component={Calendar} />
-          <Route path="/welcome" component={() => <Welcome location={location} />} />
-          <Route path="/eventslist" component={EventsList} />
-          <Route path="/register" component={() => <Auth register={true} />} />
-          <Route path="/login" component={() => <Auth register={false} location={location}/>}/>
+        <Route exact path="/" component={Calendar} />
+        <Route
+          path="/welcome"
+          component={() => <Welcome location={location} />}
+        />
+        <Route path="/eventslist" component={EventsList} />
+        <Route path="/register" component={() => <Auth register={true} />} />
+        <Route
+          path="/login"
+          component={() => <Auth register={false} location={location} />}
+        />
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './Loader.scss';
 
@@ -26,7 +27,15 @@ const Loader = Wrapped => {
     isLoading: state.calendar.isLoading
   });
 
+  Load.propTypes = {
+    isLoading: PropTypes.func.isRequired,
+  }
+
   return connect(mapStateToProps)(Load);
 };
+
+Loader.propTypes = {
+  Wrapped: PropTypes.element.isRequired,
+}
 
 export default Loader;

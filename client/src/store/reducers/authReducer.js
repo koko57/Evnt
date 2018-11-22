@@ -1,4 +1,4 @@
-import { SIGN_UP, SIGN_IN, SIGN_OUT, SHOW_MESSAGE } from '../actions/actionTypes';
+import { SIGN_UP, SIGN_IN, SIGN_OUT, SHOW_MESSAGE, SET_CURRENT_USER } from '../actions/actionTypes';
 
 const initialState = {
   logged: false,
@@ -13,9 +13,11 @@ export default function(state = initialState, action) {
     case SIGN_UP:
       return { ...state };
     case SIGN_OUT:
-      return { ...state, logged: false, loggedUser: '' };
+      return { ...state, logged: false, loggedUser: ''};
     case SHOW_MESSAGE:
       return { ...state, message: action.payload};
+    case SET_CURRENT_USER:
+      return { ...state, logged: true, loggedUser: action.payload};
     default:
       return state;
   }

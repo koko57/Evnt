@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { signIn, signUp } from '../../store/actions/authActions';
 import { loading } from '../../store/actions/calendarActions';
@@ -101,10 +102,10 @@ class Auth extends Component {
       passwordsMatch
     } = this.state;
 
-    const { register, error } = this.props;
+    const { register, errorMessage } = this.props;
     return (
       <div className="auth-form__wrapper">
-        {error && <AlertModal message={error} />}
+        {errorMessage && <AlertModal message={errorMessage} />}
         {register ? (
           <h1 className="auth-form__title">Create Account</h1>
         ) : (
@@ -189,7 +190,7 @@ class Auth extends Component {
         <button className="auth-form__btn" onClick={this.handleSubmit}>
           {register ? 'Register' : 'Sign In'}
         </button>
-        <a href="/welcome" className="auth-form__btn">
+        <a href="/welcome" className="auth-form__btn" onClick={() => this.props.loading(true)}>
           Cancel
         </a>
       </div>
@@ -197,8 +198,15 @@ class Auth extends Component {
   }
 }
 const mapStateToProps = state => ({
-  error: state.auth.message
+  errorMessage: state.auth.message
 });
+
+Auth.propTypes = {
+  errorMessage: PropTypes.string,
+  signIn: PropTypes.func.isRequired,
+  signUp: PropTypes.func.isRequired,
+  loading: PropTypes.func.isRequired
+}
 
 export default Loader(
   connect(
