@@ -1,5 +1,5 @@
 node_modules
 package-lock.json
 .editorconfig
-config/keys.js
-server/.env
+server/config/keys.js
+.env

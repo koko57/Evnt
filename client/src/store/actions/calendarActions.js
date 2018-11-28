@@ -1,9 +1,10 @@
 import {
-SELECT_DATE,
-SELECT_EVENT,
-OPEN_PANEL,
-CLOSE_PANEL,
-CHANGE_MODE, LOADING
+  SELECT_DATE,
+  SELECT_EVENT,
+  OPEN_PANEL,
+  CLOSE_PANEL,
+  CHANGE_MODE,
+  LOADING
 } from './actionTypes';
 
 export const selectDate = date => dispatch => {

@@ -8,29 +8,35 @@ import ModalEventsList from './ModalEventsList';
 import './Modal.scss';
 
 class Modal extends Component {
-  handleKeyPress = (e, fn) => {
-    const code = e.keyCode ? e.keyCode : e.which;
-    if (code === 13) {
-      fn();
-    }
-  };
   trapFocus = () => {
-    const firstElemId = document.getElementById('modal').firstChild.id;
-    const panel = document.getElementById(firstElemId);
+    const focusable = document
+      .getElementById('modal')
+      .querySelectorAll(
+        'button, [href], input, select, [tabindex]:not([tabindex="-1"])'
+      );
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
     const close = document.getElementById('close');
-    panel.firstChild.addEventListener('keydown', function(e) {
+    first.addEventListener('keydown', function(e) {
       if ((e.keyCode === 9 || e.which === 9) && e.shiftKey) {
         close.focus();
         e.preventDefault();
       }
     });
-    panel.lastChild.addEventListener('keydown', function(e) {
+    last.addEventListener('keydown', function(e) {
       if (e.keyCode === 9 || e.which === 9) {
         close.focus();
         e.preventDefault();
       }
     });
+    close.addEventListener('keydown', function(e) {
+      if ((e.keyCode === 9 || e.which === 9) && e.shiftKey) {
+        last.focus();
+        e.preventDefault();
+      }
+    });
   };
+
   render() {
     const { mode, selectedDate, closePanel } = this.props;
     let displayDate = format(new Date(selectedDate), 'eeee, d MMMM');

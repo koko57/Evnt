@@ -101,7 +101,7 @@ class EventForm extends Component {
 
   render() {
     const { message, name, date, time, eventType, important } = this.state;
-    const { selectedDate, mode, events, handleKeyPress } = this.props;
+    const { selectedDate, mode, events } = this.props;
 
     // Rendering radio buttons
     let types = ['music', 'movie', 'art', 'family', 'meeting', 'other'];
@@ -132,7 +132,11 @@ class EventForm extends Component {
     });
 
     return (
-      <form className="add-event__form" id="event-form">
+      <form
+        className="add-event__form"
+        id="event-form"
+        onSubmit={this.handleSubmit}
+      >
         <input
           type="text"
           className="event-info event-info--name validate"
@@ -140,10 +144,9 @@ class EventForm extends Component {
           id="name"
           placeholder="Event name"
           onChange={this.handleChange}
-          onKeyPress={handleKeyPress(this.handleSubmit)}
           tabIndex="0"
           value={name}
-          required
+          autoFocus
         />
         {!name && <p className="event-info__message">{message}</p>}
         {mode === 'edit' && (
@@ -180,11 +183,7 @@ class EventForm extends Component {
           </label>
         </div>
 
-        <button
-          className="modal-button--large"
-          onClick={this.handleSubmit}
-          id="submit"
-        >
+        <button type="submit" className="modal-button--large" id="submit">
           Submit
         </button>
         {mode !== 'view' && selectedDate && events.length !== 0 && (

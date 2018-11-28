@@ -2,11 +2,12 @@
 
 .event-bar {
   @include flex($justify: space-between, $align: center);
+  position: relative;
   width: 100%;
   max-width: 900px;
   margin: 0.5rem auto;
-  padding: 1rem 1.5rem;
-  @include border($grey--light);
+  padding: 1rem 0;
+  border-bottom: 1px solid $grey--lighter;
   @include media($size-md) {
     @include flex($align: center);
     padding-left: 2rem;
@@ -20,8 +21,13 @@
     }
   }
   &__item {
+    @include flex();
     font-family: $font--secondary;
     padding: 0.5rem;
+    vertical-align: middle;
+    &__text {
+      line-height: 1.5rem;
+    }
     &--name {
       flex: 4;
       @include media($size-md) {
@@ -50,13 +56,9 @@
     }
   }
   &__icons {
-    flex: 1;
-    margin-left: 1rem;
     text-align: right;
     max-width: 150px;
-    &--panel {
-      @include flex(column);
-    }
+    padding: 0.2rem;
     @include media($size-md) {
       @include flex(column);
       flex: none;
@@ -64,8 +66,6 @@
   }
   &__iconBtn {
     border: none;
-    padding: 0;
-    margin: 0.5rem;
     -webkit-appearance: none;
     font-size: 1.5rem;
     @include media($size-md) {
@@ -75,14 +75,17 @@
   &__icon {
     display: inline;
     @include icons;
+    padding: 0.2rem;
+    font-size: 0.75em;
     @include media($size-md) {
       font-size: 0.7em;
     }
   }
   &__typeIcon {
     color: $grey--light;
+    height: 100%;
     @include radio-colors;
-    vertical-align: middle;
+    vertical-align: top;
     cursor: default;
     margin-right: 0.5rem;
   }

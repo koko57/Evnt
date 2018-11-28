@@ -42,15 +42,17 @@ class EventBar extends Component {
             >
               {event.important ? 'error_outline' : 'panorama_fish_eye'}
             </i>
-            {event.name}
+            <span className="event-bar__item__text">{event.name}</span>
           </div>
           {list && (
             <div className="event-bar__item event-bar__item--date">
-              {format(event.date, dateFormat)}
+              <span className="event-bar__item__text">
+                {format(event.date, dateFormat)}
+              </span>
             </div>
           )}
           <div className="event-bar__item event-bar__item--time">
-            {event.time}
+            <span className="event-bar__item__text">{event.time}</span>
           </div>
         </div>
 

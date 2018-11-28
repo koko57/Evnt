@@ -29,12 +29,16 @@ class ModalEventsList extends Component {
       </li>
     ));
     return (
-      <div className="event-panel" id="event-panel" tabIndex="0">
+      <div className="event-panel" id="event-panel">
         {dayEvents.length === 0 && (
           <p className="event-panel__message">No events on this day.</p>
         )}
         <ul className="event-panel__list">{eventsLi}</ul>
-        <button className="modal-button--large" onClick={this.handleClick}>
+        <button
+          className="modal-button--large"
+          onClick={this.handleClick}
+          autoFocus
+        >
           Add new event
         </button>
       </div>

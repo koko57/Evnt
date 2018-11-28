@@ -25,7 +25,7 @@ const AlertModal = ({ message, showMessage }) => {
 AlertModal.propTypes = {
   message: PropTypes.string.isRequired,
   showMessage: PropTypes.func.isRequired
-}
+};
 
 export default connect(
   null,

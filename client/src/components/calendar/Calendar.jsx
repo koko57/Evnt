@@ -155,9 +155,11 @@ const mapStateToProps = state => ({
   loggedUser: state.auth.loggedUser
 });
 
-export default Loader(AuthHoc(
-  connect(
-    mapStateToProps,
-    { getEvents, selectDate, openPanel, changeMode }
-  )(Calendar))
+export default Loader(
+  AuthHoc(
+    connect(
+      mapStateToProps,
+      { getEvents, selectDate, openPanel, changeMode }
+    )(Calendar)
+  )
 );

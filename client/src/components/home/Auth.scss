@@ -13,17 +13,22 @@
   }
   &__form {
     @include flex(column, space-evenly, center);
-    margin: 1rem auto 1.5rem;
+    margin: 1rem auto;
     text-align: left;
   }
   &__input {
     line-height: 2rem;
+    padding: 0 0.5rem;
     font-family: $font--secondary;
     font-size: 1rem;
     border: none;
     border-bottom: 1px solid $violet--light;
     width: 12rem;
     margin: 0.5rem auto;
+  }
+  &__buttons {
+    @include flex(column, space-evenly, center);
+    margin-top: 1.5rem;
   }
   &__btn {
     @include button;

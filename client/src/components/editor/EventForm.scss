@@ -9,6 +9,7 @@
   font-family: $font--secondary;
   font-size: 1rem;
   border: none;
+  padding: 0 0.5rem;
   border-bottom: 1px solid $violet--light;
   width: 90%;
   margin: 0.5rem auto;
@@ -67,7 +68,7 @@
   }
 }
 
-input[type="checkbox" i] {
+input[type='checkbox' i] {
   -webkit-appearance: none;
   appearance: none;
   margin: 0;
@@ -78,5 +79,3 @@ input[type="checkbox" i] {
   left: 0.25rem;
   cursor: pointer;
 }
-
-

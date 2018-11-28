@@ -6,7 +6,33 @@ import { Link, NavLink } from 'react-router-dom';
 import { signOut } from '../../store/actions/authActions';
 import './Navbar.scss';
 
-const Navbar = ({ signOut }) => {
+const Navbar = ({ signOut, location }) => {
+  const navlink =
+    location.pathname === '/' ? (
+      <NavLink
+        to="/eventslist"
+        title="Manage your events"
+        activeClassName="selected"
+        className="navbar__link"
+        onClick={() => console.log(location)}
+      >
+        <i className="navbar__icon material-icons" id="list">
+          list
+        </i>
+      </NavLink>
+    ) : (
+      <NavLink
+        exact
+        to="/"
+        title="Back to calendar"
+        activeClassName="selected"
+        className="navbar__link"
+      >
+        <i className="navbar__icon material-icons" id="calendar">
+          insert_invitation
+        </i>
+      </NavLink>
+    );
   return (
     <nav className="navbar">
       <div className="navbar__wrapper">
@@ -16,27 +42,7 @@ const Navbar = ({ signOut }) => {
           </Link>
         </div>
         <div className="navbar__links">
-          <NavLink
-            to="/eventslist"
-            title="Manage your events"
-            activeClassName="selected"
-            className="navbar__link"
-          >
-            <i className="navbar__icon material-icons" id="list">
-              list
-            </i>
-          </NavLink>
-          <NavLink
-            exact
-            to="/"
-            title="Back to calendar"
-            activeClassName="selected"
-            className="navbar__link"
-          >
-            <i className="navbar__icon material-icons" id="calendar">
-              insert_invitation
-            </i>
-          </NavLink>
+          {navlink}
           <NavLink
             to="/welcome"
             title="Log Out"

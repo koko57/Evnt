@@ -9,17 +9,14 @@ class Welcome extends Component {
   componentDidMount() {
     this.props.loading(false);
   }
+
   render() {
     const { loading } = this.props;
     return (
       <div className="start">
         <h2 className="start__welcome">Welcome to</h2>
         <h1 className="start__header">Evnt</h1>
-        <a
-          href="/login"
-          className="start__btn"
-          onClick={() => loading(true)}
-        >
+        <a href="/login" className="start__btn" onClick={() => loading(true)}>
           Sign In
         </a>
         <a

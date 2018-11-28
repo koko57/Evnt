@@ -5,13 +5,8 @@
 }
 
 @mixin radio-colors() {
-  $colors:
-    'music' $event-violet,
-    'movie' $event-red,
-    'art' $event-blue,
-    'family' $event-yellow,
-    'meeting' $event-green,
-    'other' $grey--light;
+  $colors: 'music' $event-violet, 'movie' $event-red, 'art' $event-blue,
+    'family' $event-yellow, 'meeting' $event-green, 'other' $grey--light;
   @each $i in $colors {
     &.#{nth($i, 1)} {
       border-color: nth($i, 2);
@@ -21,13 +16,8 @@
 }
 
 @mixin radio-colors-inverted() {
-  $colors:
-    'music' $event-violet,
-    'movie' $event-red,
-    'art' $event-blue,
-    'family' $event-yellow,
-    'meeting' $event-green,
-    'other' $grey--light;
+  $colors: 'music' $event-violet, 'movie' $event-red, 'art' $event-blue,
+    'family' $event-yellow, 'meeting' $event-green, 'other' $grey--light;
   @each $i in $colors {
     &.#{nth($i, 1)} {
       border-color: nth($i, 2);
@@ -65,6 +55,11 @@
 @mixin button() {
   @include border($violet--dark);
   cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background: none;
   text-align: center;
   font-family: $font--main;
   line-height: 1rem;

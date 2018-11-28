@@ -19,7 +19,7 @@
     @include flex(column);
     padding: 4.5rem 0 1rem;
     position: relative;
-    @include border($violet--dark);
+    @include border($grey--light);
   }
   &__header {
     font-family: $font--main;
@@ -41,7 +41,10 @@
     border: none;
     padding: 0;
     -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
     appearance: none;
+    background: none;
     font-size: 1.5rem;
     &--close {
       display: block;

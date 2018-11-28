@@ -16,6 +16,7 @@ class EventsList extends Component {
   componentDidMount() {
     this.props.getEvents(this.props.loggedUser);
   }
+
   render() {
     let { events, panelOpened } = this.props;
     let months = _.uniq(events.map(e => format(e.date, 'MMMM YYYY')));

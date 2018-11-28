@@ -19,10 +19,12 @@ class Auth extends Component {
       validForm: true
     };
   }
+
   componentDidMount() {
     this.props.loading(false);
   }
-  handleChange = e => {
+
+  handleBlur = e => {
     const pattern = {
       username: /^[a-z\d]{3,12}$/i,
       email: /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/,
@@ -38,6 +40,12 @@ class Auth extends Component {
         [e.target.name]: { value: e.target.value, valid: true, msg: false }
       });
     }
+  };
+
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: { ...this.state[e.target.name], value: e.target.value }
+    });
   };
 
   checkPassword = e => {
@@ -93,6 +101,7 @@ class Auth extends Component {
     this.validate();
     register && validForm ? signUp(newUser) : signIn(user);
   };
+
   render() {
     const {
       username,
@@ -123,8 +132,10 @@ class Auth extends Component {
             id="email"
             className="auth-form__input"
             onChange={this.handleChange}
+            onBlur={this.handleBlur}
             value={email.value}
-            placeholder="email"
+            placeholder="Email"
+            autoFocus
           />
           {!email.value && email.msg && (
             <p className="auth-form__message">Email is required!</p>
@@ -139,8 +150,9 @@ class Auth extends Component {
               id="username"
               className="auth-form__input"
               onChange={this.handleChange}
+              onBlur={this.handleBlur}
               value={username.value}
-              placeholder="username"
+              placeholder="Username"
             />
           )}{' '}
           {register && !username.value && username.msg && (
@@ -157,16 +169,17 @@ class Auth extends Component {
             id="password"
             className="auth-form__input"
             onChange={this.handleChange}
+            onBlur={this.handleBlur}
             value={password.value}
-            placeholder="password"
+            placeholder="Password"
           />
           {!password.value && password.msg && (
             <p className="auth-form__message">Password is required!</p>
           )}
-          {!password.valid && password.msg && register &&(
+          {!password.valid && password.msg && register && (
             <p className="auth-form__message">
               Password must be min 8 characters long and contain 1 uppercase
-              letter and 1 number
+              letter and 1 number.
             </p>
           )}
           {register && (
@@ -176,8 +189,9 @@ class Auth extends Component {
               id="passwordCheck"
               className="auth-form__input"
               onChange={this.checkPassword}
+              onBlur={this.handleBlur}
               value={passwordCheck.value}
-              placeholder="confirm password"
+              placeholder="Confirm password"
             />
           )}
           {register && !passwordCheck.value && passwordCheck.msg && (
@@ -186,13 +200,19 @@ class Auth extends Component {
           {!passwordsMatch && (
             <p className="auth-form__message">Passwords do not match!</p>
           )}
+          <div className="auth-form__buttons">
+            <button type="submit" className="auth-form__btn">
+              {register ? 'Register' : 'Sign In'}
+            </button>
+            <a
+              href="/welcome"
+              className="auth-form__btn"
+              onClick={() => this.props.loading(true)}
+            >
+              Cancel
+            </a>
+          </div>
         </form>
-        <button className="auth-form__btn" onClick={this.handleSubmit}>
-          {register ? 'Register' : 'Sign In'}
-        </button>
-        <a href="/welcome" className="auth-form__btn" onClick={() => this.props.loading(true)}>
-          Cancel
-        </a>
       </div>
     );
   }
@@ -206,7 +226,7 @@ Auth.propTypes = {
   signIn: PropTypes.func.isRequired,
   signUp: PropTypes.func.isRequired,
   loading: PropTypes.func.isRequired
-}
+};
 
 export default Loader(
   connect(

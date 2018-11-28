@@ -16,7 +16,7 @@
     background-color: $bg-color;
     @include flex(column, center, center);
     padding: 3rem;
-    @include border($violet--dark);
+    @include border($grey--light);
     font-family: $font--main;
     font-size: 1.2rem;
     text-align: center;

@@ -5,18 +5,27 @@
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: $bg-color;
-  border-bottom: 1px solid $grey--light;
+  z-index: 999999999;
+  background: linear-gradient(
+    to bottom,
+    $bg-color 80%,
+    $bg-color--a 90%,
+    rgba(25, 255, 255, 0) 100%
+  );
   @include flex($align: center);
   &__wrapper {
     width: 90%;
     max-width: 1000px;
+    height: 100%;
     margin: auto;
     text-align: center;
     @include flex($justify: space-between, $align: center);
   }
   &__logo > a {
     text-decoration: none;
+    &:active {
+      color: $violet--light;
+    }
   }
   &__title {
     font-family: $font--main;
@@ -24,9 +33,10 @@
   }
   &__icon.material-icons {
     @include icons;
+    vertical-align: middle;
   }
   &__link {
-    margin-left: 1rem;
+    padding: 0.5rem;
   }
   a.selected > .navbar__icon.material-icons {
     display: none;

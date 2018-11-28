@@ -21,14 +21,14 @@ const Day = ({
             ? 'disabled prev'
             : 'disabled next'
           : weekend
-            ? 'weekend'
-            : ''
+          ? 'weekend'
+          : ''
       }`}
       id={date}
       data-events={count}
       onClick={sameMonth ? handleClick : null}
       onKeyPress={handleClick}
-      tabIndex="0"
+      tabIndex={sameMonth ? '0' : '-1'}
     >
       {count > 0 ? (
         <i

@@ -9,4 +9,7 @@
   &__week-row {
     @include flex;
   }
+  @include media($size-sm) {
+    padding: 0 0.75rem;
+  }
 }

@@ -3,37 +3,62 @@
 .day {
   &__cell {
     width: calc(100% / 7);
-    height: 10vh;
-    border: 1px solid $grey--light;
+    height: 5rem;
     position: relative;
     overflow: hidden;
     font-family: $font--main;
-    font-size: 6vh;
+    font-size: 2.2rem;
     padding: 0.75rem;
     color: $grey;
     transition: 0.2s;
     cursor: pointer;
+    &::before {
+      content: '';
+      position: absolute;
+      background: $grey--lighter;
+      height: 1px;
+      width: 80%;
+      bottom: 0;
+      margin: 0 auto;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      background: $grey--lighter;
+      width: 1px;
+      height: 70%;
+      vertical-align: middle;
+      right: 0;
+    }
+    &:focus {
+      outline: none;
+    }
+
     &.disabled {
-      color: $grey--light;
+      color: $grey--lighter;
       cursor: default;
+      box-shadow: none;
     }
     &.weekend {
       color: $violet--light;
     }
-    &:hover:not(.disabled) {
+    &:hover:not(.disabled),
+    &:focus:not(.disabled) {
       box-shadow: inset 0 0 1px 2px $violet--light;
+      &::after,
+      &::before {
+        visibility: hidden;
+      }
     }
     @include media($size-md) {
-      font-size: 6vw;
       line-height: 100%;
+      font-size: 1.5rem;
     }
   }
   &__date {
     position: absolute;
     bottom: 0.5rem;
     right: 0.8rem;
-    line-height: 6vh;
-
     @include media($size-sm) {
       bottom: 0.2rem;
       right: 0.5rem;

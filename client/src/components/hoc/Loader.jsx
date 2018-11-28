@@ -28,14 +28,14 @@ const Loader = Wrapped => {
   });
 
   Load.propTypes = {
-    isLoading: PropTypes.func.isRequired,
-  }
+    isLoading: PropTypes.bool.isRequired
+  };
 
   return connect(mapStateToProps)(Load);
 };
 
 Loader.propTypes = {
-  Wrapped: PropTypes.element.isRequired,
-}
+  Wrapped: PropTypes.element.isRequired
+};
 
 export default Loader;

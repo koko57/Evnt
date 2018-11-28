@@ -24,6 +24,10 @@
     border: none;
     padding: 0;
     -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    background: none;
   }
   &__icon {
     @include icons;
