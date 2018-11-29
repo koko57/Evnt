@@ -1,4 +1,6 @@
+require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -14,11 +16,9 @@ const ExtractJWT = passportJWT.ExtractJwt;
 const expressValidator = require('express-validator');
 const app = express();
 
-const mongoURI = 'mongodb://koko:lama90@ds257372.mlab.com:57372/evnt';
-
 mongoose
   .connect(
-    mongoURI,
+    process.env.MONGO_URI,
     { useNewUrlParser: true }
   )
   .then(() => console.log('connected to mlab'))
@@ -27,7 +27,7 @@ mongoose
 app.use(bodyParser.json());
 app.use(
   session({
-    secret: 'haifhdlhafkdbacjsbickhsa',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
   })
@@ -53,7 +53,7 @@ passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: 'ncnjznckz'
+      secretOrKey: process.env.JWT_SECRET
     },
     function(jwtPayload, cb) {
       return User.findById(jwtPayload.id)
@@ -70,7 +70,13 @@ passport.use(
 app.use('/api/events', events);
 app.use('/api/auth', auth);
 
-const port = process.env.PORT || 5004;
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client', 'build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
