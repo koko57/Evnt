@@ -178,7 +178,7 @@ class Auth extends Component {
           )}
           {!password.valid && password.msg && register && (
             <p className="auth-form__message">
-              Password must be min 8 characters long and contain 1 uppercase
+              Password must be min 8 characters long and contain at least 1 uppercase, 1 lowercase
               letter and 1 number.
             </p>
           )}

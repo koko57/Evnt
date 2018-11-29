@@ -19,7 +19,7 @@ class EventsList extends Component {
 
   render() {
     let { events, panelOpened } = this.props;
-    let months = _.uniq(events.map(e => format(e.date, 'MMMM YYYY')));
+    let months = _.uniq(events.map(e => format(e.date, 'MMMM YYYY', { awareOfUnicodeTokens: true })));
     months = months.map(month => (
       <div className={`events-list__month ${month}`} key={month}>
         <h3 className="events-list__heading">{month}</h3>
