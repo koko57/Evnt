@@ -135,7 +135,6 @@ class Auth extends Component {
             onBlur={this.handleBlur}
             value={email.value}
             placeholder="Email"
-            autoFocus
           />
           {!email.value && email.msg && (
             <p className="auth-form__message">Email is required!</p>
@@ -178,8 +177,8 @@ class Auth extends Component {
           )}
           {!password.valid && password.msg && register && (
             <p className="auth-form__message">
-              Password must be min 8 characters long and contain at least 1 uppercase, 1 lowercase
-              letter and 1 number.
+              Password must be min 8 characters long and contain at least 1
+              uppercase, 1 lowercase letter and 1 number.
             </p>
           )}
           {register && (
