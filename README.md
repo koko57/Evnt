@@ -3,7 +3,6 @@ Evnt planning full stack app with authentication and database hosted on [mLab](h
 
 ![Screenshot](https://raw.githubusercontent.com/koko57/portfolio/master/static/img/evnt.png)
 
-
 ## Built with
 Front End: React, Redux, React Router
 Back End: Node.js (Express), Mongoose, Passport
