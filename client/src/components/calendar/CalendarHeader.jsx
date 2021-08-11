@@ -34,7 +34,7 @@ const CalendarHeader = ({
         </button>
         <div className="calendar-header__item">
           <h2 className="calendar-header__month">
-            {format(currentMonth, 'MMMM YYYY', { awareOfUnicodeTokens: true })}
+            {format(currentMonth, 'MMMM yyyy', { awareOfUnicodeTokens: true })}
           </h2>
         </div>
         <button
