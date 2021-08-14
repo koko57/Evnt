@@ -91,14 +91,12 @@ class Calendar extends Component {
 	}
 
 	nextMonth = () => {
-		console.log(addMonths(this.state.currentMonth, 1));
 		this.setState({
 			currentMonth: addMonths(this.state.currentMonth, 1),
 		});
 	};
 
 	prevMonth = () => {
-		console.log(subMonths(this.state.currentMonth, 1));
 		this.setState({
 			currentMonth: subMonths(this.state.currentMonth, 1),
 		});
