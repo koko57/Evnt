@@ -55,7 +55,6 @@ class EventBar extends Component {
             <span className="event-bar__item__text">{event.time}</span>
           </div>
         </div>
-
         <div
           className={`event-bar__icons ${
             panel ? 'event-bar__icons--panel' : ''

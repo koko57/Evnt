@@ -67,6 +67,7 @@
   &__iconBtn {
     border: none;
     -webkit-appearance: none;
+    background: transparent;
     font-size: 1.5rem;
     @include media($size-md) {
       margin: 0.25rem;
