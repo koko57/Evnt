@@ -1,5 +1,5 @@
 # Evnt
-Evnt planning full stack app with authentication and database hosted on [mLab](https://mlab.com/).
+Evnt planning full stack app with authentication and database hosted on previously hosted on mLab, now on MongoDB Atlas.
 
 ![Screenshot](https://raw.githubusercontent.com/koko57/portfolio/master/static/img/evnt.png)
 
